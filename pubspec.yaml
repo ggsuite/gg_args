@@ -1,0 +1,18 @@
+name: gg_args
+description: Additions and helpers to the args packages needed by various of our projects.
+version: 1.0.0
+repository: https://github.com/inlavigo/gg_args.git
+
+environment:
+  sdk: ^3.4.0-140.0.dev
+
+dependencies:
+  args: ^2.4.2
+  colorize: ^3.0.0
+  path: ^1.8.0
+
+dev_dependencies:
+  gg_check: ^1.0.1
+  lints: ^3.0.0
+  pana: ^0.22.1
+  test: ^1.24.0
