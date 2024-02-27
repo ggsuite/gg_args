@@ -6,4 +6,4 @@
 
 library;
 
-export 'src/gg_args.dart';
+export 'src/gg_command_runner.dart';

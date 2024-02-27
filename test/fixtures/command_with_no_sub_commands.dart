@@ -4,34 +4,13 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
-// #############################################################################
 import 'package:args/command_runner.dart';
 
-/// Gg Args
-class GgArgs {
-  /// Constructor
-  GgArgs({
-    required this.param,
-    required this.log,
-  });
-
-  /// The param to work with
-  final String param;
-
-  /// The log function
-  final void Function(String msg) log;
-
-  /// The function to be executed
-  Future<void> exec() async {
-    log('Executing GgArgs with param $param');
-  }
-}
-
 // #############################################################################
-/// The command line interface for GgArgs
-class GgArgsCmd extends Command<dynamic> {
+/// The command line interface for GgAbc
+class CommandWithNoSubCommands extends Command<dynamic> {
   /// Constructor
-  GgArgsCmd({required this.log}) {
+  CommandWithNoSubCommands({required this.log}) {
     _addArgs();
   }
 
@@ -40,23 +19,16 @@ class GgArgsCmd extends Command<dynamic> {
 
   // ...........................................................................
   @override
-  final name = 'ggArgs';
+  final name = 'ggCmd';
   @override
-  final description = 'Add your description here.';
+  final description =
+      'My very nice short and minimum sixty characters long description.';
 
   // ...........................................................................
   @override
   Future<void> run() async {
     var param = argResults?['param'] as String;
-    GgArgs(
-      param: param,
-      log: log,
-    );
-
-    await GgArgs(
-      param: param,
-      log: log,
-    ).exec();
+    log('Running "$name" with param: "$param"');
   }
 
   // ...........................................................................
@@ -66,7 +38,7 @@ class GgArgsCmd extends Command<dynamic> {
       abbr: 'p',
       help: 'The param to work with',
       valueHelp: 'param',
-      defaultsTo: '.',
+      mandatory: true,
     );
   }
 }
