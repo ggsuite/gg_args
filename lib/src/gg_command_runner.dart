@@ -52,18 +52,18 @@ class GgCommandRunner {
   String _colorizeMissingParam(String msg) {
     // Capture param as well text before and after
     final regExp =
-        RegExp(r'(Invalid argument\(s\): Option )(param)( is mandatory.)');
-    final allMatches = regExp.allMatches(msg);
+        RegExp(r'(Invalid argument\(s\): Option )(\w+)( is mandatory.)');
+    final match = regExp.firstMatch(msg);
 
     // Does not match?
-    if (allMatches.isEmpty || allMatches.first.groupCount != 3) {
+    if (match == null || match.groupCount != 3) {
       return msg;
     }
 
     // Match text before param
-    final before = allMatches.elementAt(0).group(1)!;
-    final param = allMatches.elementAt(0).group(2)!;
-    final after = allMatches.elementAt(0).group(3);
+    final before = match.group(1)!;
+    final param = match.group(2)!;
+    final after = match.group(3);
 
     // Colorize parts
     final beforeYellow = Colorize(before).yellow().toString();
@@ -79,18 +79,18 @@ class GgCommandRunner {
 
     // Capture param as well text before and after
     final regExp =
-        RegExp(r'(Missing argument for.+)(param)(.*)', multiLine: true);
-    final allMatches = regExp.allMatches(msg);
+        RegExp(r'(Missing argument for\s*)(\w+)(\.)', multiLine: true);
+    final match = regExp.firstMatch(msg);
 
     // Does not match?
-    if (allMatches.isEmpty || allMatches.first.groupCount != 3) {
+    if (match == null || match.groupCount != 3) {
       return msg;
     }
 
     // Match text before param
-    final before = allMatches.elementAt(0).group(1)!;
-    final param = allMatches.elementAt(0).group(2)!;
-    final after = allMatches.elementAt(0).group(3);
+    final before = match.group(1)!;
+    final param = match.group(2)!;
+    final after = match.group(3);
 
     // Colorize parts
     final beforeYellow = Colorize(before).yellow().toString();
