@@ -149,7 +149,9 @@ void main() {
             );
 
             final expectedLogs = [
-              'Missing argument for',
+              'Missing',
+              'argument',
+              'for',
               Colorize('param').red().toString(),
             ];
 
@@ -314,7 +316,9 @@ void main() {
             );
 
             final expectedLogs = [
-              'Missing argument for',
+              'Missing',
+              Colorize('argument').red().toString(),
+              'for',
               Colorize('param').red().toString(),
             ];
 

@@ -79,25 +79,29 @@ class GgCommandRunner {
 
     // Capture param as well text before and after
     final regExp =
-        RegExp(r'(Missing argument for\s*)(\w+)(\.)', multiLine: true);
+        RegExp(r'(Missing )(argument)( for\s*)(\w+)(\.)', multiLine: true);
     final match = regExp.firstMatch(msg);
 
     // Does not match?
-    if (match == null || match.groupCount != 3) {
+    if (match == null || match.groupCount != 5) {
       return msg;
     }
 
     // Match text before param
-    final before = match.group(1)!;
-    final param = match.group(2)!;
-    final after = match.group(3);
+    final missing = match.group(1)!;
+    final argument = match.group(2)!;
+    final forText = match.group(3)!;
+    final param = match.group(4)!;
+    final dot = match.group(5)!;
 
     // Colorize parts
-    final beforeYellow = Colorize(before).yellow().toString();
+    final missingYellow = Colorize(missing).yellow().toString();
+    final argumentRed = Colorize(argument).red().toString();
+    final forTextYellow = Colorize(forText).yellow().toString();
     final paramRed = Colorize(param).red().toString();
-    final afterYellow = Colorize(after!).yellow().toString();
+    final dotYellow = Colorize(dot).yellow().toString();
 
-    return '$beforeYellow$paramRed$afterYellow\n';
+    return '$missingYellow$argumentRed$forTextYellow$paramRed$dotYellow\n';
   }
 
   // ...........................................................................
