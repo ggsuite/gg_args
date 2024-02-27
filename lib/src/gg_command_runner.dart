@@ -31,7 +31,7 @@ class GgCommandRunner {
 
     // Forward to the main command
     if (!args.contains(command.name)) {
-      args = ['ggCmd', ...args];
+      args = [command.name, ...args];
     }
 
     try {
