@@ -12,8 +12,6 @@ class GgCommandRunner {
   /// Constructor
   GgCommandRunner({
     required this.command,
-    this.mainName,
-    required this.description,
     required this.log,
   });
 
@@ -22,48 +20,18 @@ class GgCommandRunner {
   Future<void> run({
     required List<String> args,
   }) async {
-    final isSingleCommand = command.subcommands.isEmpty;
-
-    // Single command? mainName must equal cmdName
-    if (isSingleCommand && mainName != null && mainName != command.name) {
-      throw ArgumentError(
-        'If command has only one sub command, '
-        'command name must be the same as sub command name!',
-      );
-    }
-
-    // Not a single command? mainName must equal cmdName
-    if (!isSingleCommand && mainName == null) {
-      throw ArgumentError(
-        'If command has multiple sub commands, '
-        'a main name must be specified!',
-      );
-    }
-
-    final name = mainName ?? command.name;
-
     // Create a command runner
     final CommandRunner<void> runner = CommandRunner<void>(
-      name,
-      description,
+      '',
+      command.description,
     );
 
-    // Single command? Automatically forward to main command
-    if (!args.contains(command.name)) {
-      args = [command.name, ...args];
-    }
-
+    // If no subcommands are defined, add the main command
     runner.addCommand(command);
 
-    // Single command and no arguments given?
-
-    if ((args.length == 1 || args.contains('--help') || args.contains('-h'))) {
-      final usage = command.usage.replaceAll(
-        'Usage: $name $name',
-        'Usage: $name',
-      );
-      log(usage);
-      return;
+    // Forward to the main command
+    if (!args.contains(command.name)) {
+      args = ['ggCmd', ...args];
     }
 
     try {
@@ -74,27 +42,67 @@ class GgCommandRunner {
     // Print errors in red
     catch (e) {
       var msg = e.toString().replaceAll('Exception: ', '');
-
-      // Single command? Modify help not to require command name
-
-      msg = msg.replaceAll(
-        'Usage: $name $name [arguments]',
-        'Usage: $name [arguments]',
-      );
-
-      log(Colorize(msg).red().toString());
+      msg = _colorizeMissingParam(msg);
+      msg = _colorizeMissingArgument(msg);
+      log(msg);
     }
+  }
+
+  // ...........................................................................
+  String _colorizeMissingParam(String msg) {
+    // Capture param as well text before and after
+    final regExp =
+        RegExp(r'(Invalid argument\(s\): Option )(param)( is mandatory.)');
+    final allMatches = regExp.allMatches(msg);
+
+    // Does not match?
+    if (allMatches.isEmpty || allMatches.first.groupCount != 3) {
+      return msg;
+    }
+
+    // Match text before param
+    final before = allMatches.elementAt(0).group(1)!;
+    final param = allMatches.elementAt(0).group(2)!;
+    final after = allMatches.elementAt(0).group(3);
+
+    // Colorize parts
+    final beforeYellow = Colorize(before).yellow().toString();
+    final paramRed = Colorize(param).red().toString();
+    final afterYellow = Colorize(after!).yellow().toString();
+
+    return '$beforeYellow$paramRed$afterYellow\n';
+  }
+
+  // ...........................................................................
+  String _colorizeMissingArgument(String msg) {
+    msg = msg.replaceAll('"', '');
+
+    // Capture param as well text before and after
+    final regExp =
+        RegExp(r'(Missing argument for.+)(param)(.*)', multiLine: true);
+    final allMatches = regExp.allMatches(msg);
+
+    // Does not match?
+    if (allMatches.isEmpty || allMatches.first.groupCount != 3) {
+      return msg;
+    }
+
+    // Match text before param
+    final before = allMatches.elementAt(0).group(1)!;
+    final param = allMatches.elementAt(0).group(2)!;
+    final after = allMatches.elementAt(0).group(3);
+
+    // Colorize parts
+    final beforeYellow = Colorize(before).yellow().toString();
+    final paramRed = Colorize(param).red().toString();
+    final afterYellow = Colorize(after!).yellow().toString();
+
+    return '$beforeYellow$paramRed$afterYellow\n';
   }
 
   // ...........................................................................
   /// The command to run
   final Command<dynamic> command;
-
-  /// The main name of the command, used when there is only one sub command.
-  final String? mainName;
-
-  /// The description of the command
-  final String description;
 
   /// The logger
   final void Function(String msg) log;

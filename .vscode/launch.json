@@ -9,8 +9,8 @@
       "name": "Run GgArgs",
       "type": "dart",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/gg_args.dart",
-      "args": ["ggArgs", "--param", "value"],
+      "program": "${workspaceFolder}/bin/gg_with_subcommands.dart",
+      "args": ["ggCmd", "sub1", "-p"],
       "console": "debugConsole"
     },
     {

@@ -27,7 +27,9 @@ class SubCommand extends Command<dynamic> {
 
   @override
   Future<void> run() async {
-    log('Running "$name"');
+    final param = argResults?['param'] as String;
+
+    log('Running "$name" with param "$param"');
   }
 
   // ...........................................................................
@@ -58,5 +60,5 @@ class CommandWithSubCommands extends Command<dynamic> {
   @override
   final name = 'ggCmd';
   @override
-  final description = 'My very nice description.';
+  final description = 'Description';
 }

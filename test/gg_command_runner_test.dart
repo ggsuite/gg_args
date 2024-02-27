@@ -7,13 +7,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:colorize/colorize.dart';
 import 'package:gg_capture_print/gg_capture_print.dart';
 import 'package:test/test.dart';
 
 import '../bin/gg_with_no_subcommands.dart';
-import '../bin/gg_with_subcommands.dart';
-import 'fixtures/command_with_sub_commands.dart';
-import 'fixtures/command_with_no_sub_commands.dart';
 
 void main() {
   final messages = <String>[];
@@ -21,9 +19,10 @@ void main() {
     messages.clear();
   });
 
-  group('Without sub-commands', () {
-    final cmd = CommandWithNoSubCommands(log: messages.add);
+  // With sub-commands
+  // ######################
 
+  group('with sub-commands', () {
     group('main()', () {
       // #######################################################################
 
@@ -37,14 +36,21 @@ void main() {
         );
 
         final stdout = result.stdout as String;
-        expect(stdout, contains('Usage: ggCmd [arguments]'));
-        expect(stdout, contains(cmd.description));
+        final expectedLogs = [
+          'Invalid argument(s):',
+          Colorize('param').red().toString(),
+          'is mandatory.',
+        ];
+
+        for (final expectedLog in expectedLogs) {
+          expect(stdout, contains(expectedLog));
+        }
       });
 
       // #######################################################################
       group('--help', () {
         test('should print help', () async {
-          // Execute bin/gg_with_no_subcommands.dart and check if it prints help
+          // Execute bin/gg_cmd.dart and check if it prints help
           final result = await Process.run(
             './bin/gg_with_no_subcommands.dart',
             ['--help'],
@@ -53,117 +59,14 @@ void main() {
           );
 
           final stdout = result.stdout as String;
-          expect(
-            stdout,
-            contains('Usage: ggCmd [arguments]'),
-          );
-        });
-      });
+          final expectedLogs = [
+            'Usage:  ggCmd [arguments]',
+            'p, --param=<param> (mandatory)    The param to work with',
+          ];
 
-      group('runWithoutSubCommands(args)', () {
-        // #####################################################################
-        group('with args = []', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
-            final messages = <String>[];
-            await runWithoutSubCommands(
-              args: [],
-              log: (x) => messages.add(x),
-            );
-
-            expect(hasLog('Usage: ggCmd [arguments]', messages), true);
-            expect(hasLog('-p, --param=<param>', messages), true);
-            expect(hasLog('The param to work with', messages), true);
-          });
-        });
-
-        // #####################################################################
-        group('with args = [ggCmd]', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
-            final messages = <String>[];
-            await runWithoutSubCommands(
-              args: ['ggCmd'],
-              log: (x) => messages.add(x),
-            );
-
-            expect(hasLog('Usage: ggCmd [arguments]', messages), true);
-            expect(hasLog('-p, --param=<param>', messages), true);
-            expect(hasLog('The param to work with', messages), true);
-          });
-        });
-
-        // #####################################################################
-        group('with args = [--param]', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
-            final messages = <String>[];
-            await runWithoutSubCommands(
-              args: ['--param', '5'],
-              log: (x) => messages.add(x),
-            );
-
-            expect(hasLog('Running "ggCmd" with param: "5"', messages), true);
-          });
-        });
-
-        // #####################################################################
-        group('with args = [ggCmd --param]', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
-            final messages = <String>[];
-            await runWithoutSubCommands(
-              args: ['ggCmd', '--param', '5'],
-              log: (x) => messages.add(x),
-            );
-
-            expect(hasLog('Running "ggCmd" with param: "5"', messages), true);
-          });
-        });
-      });
-    });
-  });
-
-  // ######################
-  // With sub-commands
-  // ######################
-
-  group('with sub-commands', () {
-    final cmd = CommandWithSubCommands(log: messages.add);
-
-    group('main()', () {
-      // #######################################################################
-
-      test('should print help', () async {
-        // Execute bin/gg_cmd.dart and check if it prints help
-        final result = await Process.run(
-          './bin/gg_with_subcommands.dart',
-          [],
-          stdoutEncoding: utf8,
-          stderrEncoding: utf8,
-        );
-
-        final stdout = result.stdout as String;
-        expect(stdout, contains('Usage: ggCmd [arguments]'));
-        expect(stdout, contains(cmd.description));
-      });
-
-      // #######################################################################
-      group('--help', () {
-        test('should print help', () async {
-          // Execute bin/gg_with_subcommands.dart and check if it prints help
-          final result = await Process.run(
-            './bin/gg_with_subcommands.dart',
-            ['--help'],
-            stdoutEncoding: utf8,
-            stderrEncoding: utf8,
-          );
-
-          final stdout = result.stdout as String;
-          expect(
-            stdout,
-            contains('Usage: ggCmd [arguments]'),
-          );
+          for (final expectedLog in expectedLogs) {
+            expect(stdout, contains(expectedLog));
+          }
         });
       });
 
@@ -175,14 +78,14 @@ void main() {
         // #####################################################################
         group('with args = []', () {
           test('should print help', () async {
-            // Execute bin/gg_with_subcommands.dart and check if it prints help
+            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
 
             final messages = <String>[];
 
             await capturePrint(
               log: (x) => messages.add(x),
               code: () async {
-                await runWithSubCommands(
+                await runWithoutSubCommands(
                   args: [],
                   log: (x) => messages.add(x),
                 );
@@ -190,10 +93,9 @@ void main() {
             );
 
             final expectedLogs = [
-              'Usage: ggCmd <subcommand> [arguments]',
-              'Available subcommands:',
-              'sub1   description of sub1',
-              'sub2   description of sub2',
+              'Invalid argument(s):',
+              Colorize('param').red().toString(),
+              'is mandatory.',
             ];
 
             for (final expectedLog in expectedLogs) {
@@ -201,18 +103,18 @@ void main() {
             }
           });
 
-          // #####################################################################
+          // ###################################################################
 
           group('with args = [--help]', () {
             test('should print help', () async {
-              // Execute bin/gg_with_subcommands.dart and check if it prints help
+              // Execute bin/gg_with_no_subcommands.dart and check if it prints help
 
               final messages = <String>[];
 
               await capturePrint(
                 log: (x) => messages.add(x),
                 code: () async {
-                  await runWithSubCommands(
+                  await runWithoutSubCommands(
                     args: ['--help'],
                     log: (x) => messages.add(x),
                   );
@@ -220,10 +122,8 @@ void main() {
               );
 
               final expectedLogs = [
-                'Usage: ggCmd <subcommand> [arguments]',
-                'Available subcommands:',
-                'sub1   description of sub1',
-                'sub2   description of sub2',
+                'Usage:  ggCmd [arguments]',
+                'p, --param=<param> (mandatory)    The param to work with',
               ];
 
               for (final expectedLog in expectedLogs) {
@@ -234,69 +134,218 @@ void main() {
         });
 
         // #####################################################################
-        group('with args = [sub1]', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_subcommands.dart and check if it prints help
+        group('with args = [--param]', () {
+          test('should print error', () async {
+            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
-
             await capturePrint(
               log: (x) => messages.add(x),
               code: () async {
-                await runWithSubCommands(
-                  args: ['sub1'],
+                await runWithoutSubCommands(
+                  args: ['--param'],
                   log: messages.add,
                 );
               },
             );
 
-            expect(hasLog('Usage: ggCmd [arguments]', messages), true);
+            final expectedLogs = [
+              'Missing argument for',
+              Colorize('param').red().toString(),
+            ];
+
+            for (final expectedLog in expectedLogs) {
+              expect(hasLog(expectedLog, messages), true);
+            }
           });
         });
 
         // #####################################################################
-        group('with args = [sub1, --help]', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_subcommands.dart and check if it prints help
+        group('with args = [--param 5]', () {
+          test('should print error', () async {
+            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
             await capturePrint(
               log: (x) => messages.add(x),
               code: () async {
-                await runWithSubCommands(
-                  args: ['sub1', '--help'],
+                await runWithoutSubCommands(
+                  args: ['--param', '5'],
                   log: messages.add,
                 );
               },
             );
 
-            expect(hasLog('Usage: ggCmd [arguments]', messages), true);
+            final expectedLogs = [
+              'Running "ggCmd" with param: "5"',
+            ];
+
+            for (final expectedLog in expectedLogs) {
+              expect(hasLog(expectedLog, messages), true);
+            }
+          });
+        });
+      });
+    });
+  });
+
+  group('with sub-no-commands', () {
+    group('main()', () {
+      // #######################################################################
+
+      test('should print help', () async {
+        // Execute bin/gg_cmd.dart and check if it prints help
+        final result = await Process.run(
+          './bin/gg_with_no_subcommands.dart',
+          [],
+          stdoutEncoding: utf8,
+          stderrEncoding: utf8,
+        );
+
+        final stdout = result.stdout as String;
+        final expectedLogs = [
+          'Invalid argument(s):',
+          Colorize('param').red().toString(),
+          'is mandatory.',
+        ];
+
+        for (final expectedLog in expectedLogs) {
+          expect(stdout, contains(expectedLog));
+        }
+      });
+
+      // #######################################################################
+      group('--help', () {
+        test('should print help', () async {
+          // Execute bin/gg_cmd.dart and check if it prints help
+          final result = await Process.run(
+            './bin/gg_with_no_subcommands.dart',
+            ['--help'],
+            stdoutEncoding: utf8,
+            stderrEncoding: utf8,
+          );
+
+          final stdout = result.stdout as String;
+          final expectedLogs = [
+            'Usage:  ggCmd [arguments]',
+            'p, --param=<param> (mandatory)    The param to work with',
+          ];
+
+          for (final expectedLog in expectedLogs) {
+            expect(stdout, contains(expectedLog));
+          }
+        });
+      });
+
+      // ######################
+      // run(args)
+      // ######################
+
+      group('run(args)', () {
+        // #####################################################################
+        group('with args = []', () {
+          test('should print help', () async {
+            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
+
+            final messages = <String>[];
+
+            await capturePrint(
+              log: (x) => messages.add(x),
+              code: () async {
+                await runWithoutSubCommands(
+                  args: [],
+                  log: (x) => messages.add(x),
+                );
+              },
+            );
+
+            final expectedLogs = [
+              'Invalid argument(s):',
+              Colorize('param').red().toString(),
+              'is mandatory.',
+            ];
+
+            for (final expectedLog in expectedLogs) {
+              expect(hasLog(expectedLog, messages), true);
+            }
+          });
+
+          // ###################################################################
+
+          group('with args = [--help]', () {
+            test('should print help', () async {
+              // Execute bin/gg_with_no_subcommands.dart and check if it prints help
+
+              final messages = <String>[];
+
+              await capturePrint(
+                log: (x) => messages.add(x),
+                code: () async {
+                  await runWithoutSubCommands(
+                    args: ['--help'],
+                    log: (x) => messages.add(x),
+                  );
+                },
+              );
+
+              final expectedLogs = [
+                'Usage:  ggCmd [arguments]',
+                'p, --param=<param> (mandatory)    The param to work with',
+              ];
+
+              for (final expectedLog in expectedLogs) {
+                expect(hasLog(expectedLog, messages), true);
+              }
+            });
           });
         });
 
         // #####################################################################
         group('with args = [--param]', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_subcommands.dart and check if it prints help
+          test('should print error', () async {
+            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
-            await runWithSubCommands(
-              args: ['--param', '5'],
+            await capturePrint(
               log: (x) => messages.add(x),
+              code: () async {
+                await runWithoutSubCommands(
+                  args: ['--param'],
+                  log: messages.add,
+                );
+              },
             );
 
-            expect(hasLog('Running "ggCmd" with param: "5"', messages), true);
+            final expectedLogs = [
+              'Missing argument for',
+              Colorize('param').red().toString(),
+            ];
+
+            for (final expectedLog in expectedLogs) {
+              expect(hasLog(expectedLog, messages), true);
+            }
           });
         });
 
         // #####################################################################
-        group('with args = [ggCmd --param]', () {
-          test('should print help', () async {
-            // Execute bin/gg_with_subcommands.dart and check if it prints help
+        group('with args = [--param 5]', () {
+          test('should print error', () async {
+            // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
-            await runWithSubCommands(
-              args: ['ggCmd', '--param', '5'],
+            await capturePrint(
               log: (x) => messages.add(x),
+              code: () async {
+                await runWithoutSubCommands(
+                  args: ['--param', '5'],
+                  log: messages.add,
+                );
+              },
             );
 
-            expect(hasLog('Running "ggCmd" with param: "5"', messages), true);
+            final expectedLogs = [
+              'Running "ggCmd" with param: "5"',
+            ];
+
+            for (final expectedLog in expectedLogs) {
+              expect(hasLog(expectedLog, messages), true);
+            }
           });
         });
       });

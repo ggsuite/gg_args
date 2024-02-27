@@ -15,8 +15,6 @@ Future<void> runWithSubCommands({
 }) async {
   final runner = GgCommandRunner(
     command: CommandWithSubCommands(log: log),
-    description: 'Description of runWithSubCommands.',
-    mainName: 'ggCmd',
     log: log,
   );
 

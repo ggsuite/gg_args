@@ -15,8 +15,6 @@ Future<void> runWithoutSubCommands({
 }) async {
   final runner = GgCommandRunner(
     command: CommandWithNoSubCommands(log: log),
-    description: 'Description of runWithoutSubCommands.',
-    mainName: 'ggCmd',
     log: log,
   );
 
