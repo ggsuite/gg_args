@@ -99,7 +99,7 @@ void main() {
             ];
 
             for (final expectedLog in expectedLogs) {
-              expect(hasLog(expectedLog, messages), true);
+              expect(hasLog(messages, expectedLog), true);
             }
           });
 
@@ -127,7 +127,7 @@ void main() {
               ];
 
               for (final expectedLog in expectedLogs) {
-                expect(hasLog(expectedLog, messages), true);
+                expect(hasLog(messages, expectedLog), true);
               }
             });
           });
@@ -156,7 +156,7 @@ void main() {
             ];
 
             for (final expectedLog in expectedLogs) {
-              expect(hasLog(expectedLog, messages), true);
+              expect(hasLog(messages, expectedLog), true);
             }
           });
         });
@@ -181,7 +181,7 @@ void main() {
             ];
 
             for (final expectedLog in expectedLogs) {
-              expect(hasLog(expectedLog, messages), true);
+              expect(hasLog(messages, expectedLog), true);
             }
           });
         });
@@ -266,7 +266,7 @@ void main() {
             ];
 
             for (final expectedLog in expectedLogs) {
-              expect(hasLog(expectedLog, messages), true);
+              expect(hasLog(messages, expectedLog), true);
             }
           });
 
@@ -294,7 +294,7 @@ void main() {
               ];
 
               for (final expectedLog in expectedLogs) {
-                expect(hasLog(expectedLog, messages), true);
+                expect(hasLog(messages, expectedLog), true);
               }
             });
           });
@@ -323,7 +323,7 @@ void main() {
             ];
 
             for (final expectedLog in expectedLogs) {
-              expect(hasLog(expectedLog, messages), true);
+              expect(hasLog(messages, expectedLog), true);
             }
           });
         });
@@ -348,7 +348,7 @@ void main() {
             ];
 
             for (final expectedLog in expectedLogs) {
-              expect(hasLog(expectedLog, messages), true);
+              expect(hasLog(messages, expectedLog), true);
             }
           });
         });
