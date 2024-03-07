@@ -8,3 +8,4 @@ library;
 
 export 'src/gg_command_runner.dart';
 export 'src/gg_dir_command.dart';
+export 'src/missing_sub_commands.dart';
