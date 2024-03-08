@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.0.6
+
+- Turn `inputDir` into `Directory`
+- Add `inputDirAbsolute`
+
 ## 1.0.5
 
 - Add `missingSubCommand()`

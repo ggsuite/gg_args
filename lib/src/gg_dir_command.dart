@@ -27,17 +27,18 @@ abstract class GgDirCommand extends Command<void> {
   @mustCallSuper
   @override
   Future<void> run() async {
-    inputDir = argResults!['input'] as String;
-    inputDirName = basename(canonicalize(inputDir));
+    inputDir = Directory(argResults!['input'] as String);
+    inputDirAbsolute = Directory(canonicalize(inputDir.path));
+    inputDirName = basename(canonicalize(inputDir.path));
   }
 
   // ...........................................................................
   /// Returns true if the directory exists
-  static Future<void> checkDir({required String directory}) async {
+  static Future<void> checkDir({required Directory directory}) async {
     // Does directory exist?
-    final dirName = basename(canonicalize(directory));
+    final dirName = basename(canonicalize(directory.path));
 
-    final dir = Directory(directory);
+    final dir = Directory(directory.path);
     if (!(await dir.exists())) {
       throw ArgumentError('Directory "$dirName" does not exist.');
     }
@@ -54,7 +55,10 @@ abstract class GgDirCommand extends Command<void> {
   }
 
   /// The directory to be checked
-  late String inputDir;
+  late Directory inputDir;
+
+  /// The directory to be checked as absolute path
+  late Directory inputDirAbsolute;
 
   /// The name of the directory to be checked
   late String inputDirName;

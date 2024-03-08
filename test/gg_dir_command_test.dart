@@ -8,6 +8,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:gg_args/gg_args.dart';
+import 'package:path/path.dart';
 
 import 'package:test/test.dart';
 
@@ -80,7 +81,9 @@ void main() {
         ['Example executed for "test".'],
         reason: messages.join('\n'),
       );
-      expect(exitCode, 0);
+      expect(ggDirCommand.inputDir.path, d.path);
+      final absoluteDir = Directory(canonicalize(d.path));
+      expect(ggDirCommand.inputDirAbsolute.path, absoluteDir.path);
     });
   });
 }
