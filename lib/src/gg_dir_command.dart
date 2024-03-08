@@ -27,9 +27,9 @@ abstract class GgDirCommand extends Command<void> {
   @mustCallSuper
   @override
   Future<void> run() async {
-    inputDir = Directory(argResults!['input'] as String);
-    inputDirAbsolute = Directory(canonicalize(inputDir.path));
-    inputDirName = basename(canonicalize(inputDir.path));
+    inputDirRelative = Directory(argResults!['input'] as String);
+    inputDir = Directory(canonicalize(inputDirRelative.path));
+    inputDirName = basename(canonicalize(inputDirRelative.path));
   }
 
   // ...........................................................................
@@ -54,11 +54,11 @@ abstract class GgDirCommand extends Command<void> {
     );
   }
 
-  /// The directory to be checked
-  late Directory inputDir;
+  /// The directory to be checked as relative path
+  late Directory inputDirRelative;
 
   /// The directory to be checked as absolute path
-  late Directory inputDirAbsolute;
+  late Directory inputDir;
 
   /// The name of the directory to be checked
   late String inputDirName;
@@ -82,7 +82,7 @@ class GgDirCommandExample extends GgDirCommand {
   @override
   Future<void> run() async {
     await super.run();
-    await GgDirCommand.checkDir(directory: inputDir);
+    await GgDirCommand.checkDir(directory: inputDirRelative);
     super.log('Example executed for "$inputDirName".');
   }
 }

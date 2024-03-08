@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.0.7
+
+- Rename `inputDir` into `inputDirRelative`
+- Rename `inputDirAbsolute` into `inputDir`
+
 ## 1.0.6
 
 - Turn `inputDir` into `Directory`

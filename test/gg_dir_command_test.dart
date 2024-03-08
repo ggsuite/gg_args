@@ -81,9 +81,9 @@ void main() {
         ['Example executed for "test".'],
         reason: messages.join('\n'),
       );
-      expect(ggDirCommand.inputDir.path, d.path);
+      expect(ggDirCommand.inputDirRelative.path, d.path);
       final absoluteDir = Directory(canonicalize(d.path));
-      expect(ggDirCommand.inputDirAbsolute.path, absoluteDir.path);
+      expect(ggDirCommand.inputDir.path, absoluteDir.path);
     });
   });
 }
