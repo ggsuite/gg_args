@@ -16,6 +16,7 @@ import 'package:recase/recase.dart';
 Future<(List<String> commandList, String? errorMessage)> missingSubCommands({
   required Directory directory,
   required Command<dynamic> command,
+  List<String> additionalSubCommands = const [],
 }) async {
   // Iterate all files in lib/src/commands
   // and check if they are added to the command runner
@@ -31,7 +32,8 @@ Future<(List<String> commandList, String? errorMessage)> missingSubCommands({
             .replaceAll('_', '-')
             .replaceAll('gg-', ''),
       )
-      .toList();
+      .toList()
+    ..addAll(additionalSubCommands);
 
   final runner = CommandRunner<void>('runner', '');
   runner.addCommand(command);

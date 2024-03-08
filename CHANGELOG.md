@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.8
+
+- Add `additionalSubCommands` to arguments of `missingSubCommands`
+
 ## 1.0.7
 
 - Rename `inputDir` into `inputDirRelative`

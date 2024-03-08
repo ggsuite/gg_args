@@ -69,25 +69,28 @@ void main() {
       });
 
       group('a list of missing sub commands and an error message', () {
-        test('when sub commands are missing', () async {
-          // Create a dart file "another_sub_command.dart"
-          final subCommandDartFile =
-              File('${tmpDir.path}/another_sub_command.dart');
-          subCommandDartFile.writeAsStringSync('// content');
+        group('when sub commands are missing', () {
+          test('including missing additional arguments', () async {
+            // Create a dart file "another_sub_command.dart"
+            final subCommandDartFile =
+                File('${tmpDir.path}/another_sub_command.dart');
+            subCommandDartFile.writeAsStringSync('// content');
 
-          // Estimate the list of missing sub commands
-          final (commandList, errorMessage) = await missingSubCommands(
-            directory: tmpDir,
-            command: MyCommand(),
-          );
+            // Estimate the list of missing sub commands
+            final (commandList, errorMessage) = await missingSubCommands(
+              directory: tmpDir,
+              command: MyCommand(),
+              additionalSubCommands: ['xyz'],
+            );
 
-          // The list should contain "another-sub-command"
-          // because MyCommand does not have the sub command "sub-command"
-          expect(commandList, ['another-sub-command']);
-          expect(
-              errorMessage,
-              'The following sub commands needed to be added to '
-              'class MyCommand:\n- another-sub-command');
+            // The list should contain "another-sub-command"
+            // because MyCommand does not have the sub command "sub-command"
+            expect(commandList, ['another-sub-command', 'xyz']);
+            expect(
+                errorMessage,
+                'The following sub commands needed to be added to '
+                'class MyCommand:\n- another-sub-command, xyz');
+          });
         });
       });
     });
