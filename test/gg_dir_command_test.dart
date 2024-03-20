@@ -109,11 +109,11 @@ void main() {
         test('when input directory is given via --input argument', () async {
           initCommand();
           await runner.run(['example', '--input', d.path]);
-          expect(
-            messages,
-            ['Example executed for "test".'],
-            reason: messages.join('\n'),
-          );
+          expect(messages.last, 'Example executed for "test".');
+
+          // Run again
+          await runner.run(['example', '--input', d.path]);
+          expect(messages.last, 'Example executed for "test".');
         });
       });
     });

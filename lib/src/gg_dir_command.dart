@@ -41,19 +41,20 @@ abstract class GgDirCommand extends Command<void> {
     if (!_isInitialized) {
       final dirFromArgs = Directory(argResults!['input'] as String);
       _initInputDir(dirFromArgs);
-      return;
     }
 
     // Input dir is given via constructor?
     // Complain if input dir is also given via --input argument.
-    if (_isInitialized) {
-      if (argResults?.options.contains('input') == true) {
+    else {
+      if (_isFirstRun && argResults?.options.contains('input') == true) {
         throw ArgumentError(
           'The input directory is specified twice: '
           'One tima via constructor and a second time via --input argument.',
         );
       }
     }
+
+    _isFirstRun = false;
   }
 
   // ...........................................................................
@@ -94,6 +95,7 @@ abstract class GgDirCommand extends Command<void> {
 
   // ...........................................................................
   bool _isInitialized = false;
+  bool _isFirstRun = true;
 
   // ...........................................................................
   void _initInputDir(Directory dir) {

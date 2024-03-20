@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.1.0
+## 1.1.1
 
 - `GgDirCommand`: Input directory can also be specified via constructor.
 
