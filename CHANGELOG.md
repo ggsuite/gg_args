@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.0
+
+- `GgDirCommand`: Input directory can also be specified via constructor.
+
 ## 1.0.8
 
 - Add `additionalSubCommands` to arguments of `missingSubCommands`

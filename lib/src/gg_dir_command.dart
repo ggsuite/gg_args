@@ -14,9 +14,18 @@ import 'package:path/path.dart';
 /// Base class for all ggGit commands
 abstract class GgDirCommand extends Command<void> {
   /// Constructor
+  ///
+  /// - [log] is the log function
+  /// - [inputDir] is the directory to be processed.
+  ///   If not given, it will read from --input argument, when calling run().
   GgDirCommand({
     required this.log,
+    Directory? inputDir,
   }) {
+    if (inputDir != null) {
+      _initInputDir(inputDir);
+    }
+
     _addArgs();
   }
 
@@ -27,9 +36,24 @@ abstract class GgDirCommand extends Command<void> {
   @mustCallSuper
   @override
   Future<void> run() async {
-    inputDirRelative = Directory(argResults!['input'] as String);
-    inputDir = Directory(canonicalize(inputDirRelative.path));
-    inputDirName = basename(canonicalize(inputDirRelative.path));
+    // Input dir not is given via constructor?
+    // Take input dir from --input argument.
+    if (!_isInitialized) {
+      final dirFromArgs = Directory(argResults!['input'] as String);
+      _initInputDir(dirFromArgs);
+      return;
+    }
+
+    // Input dir is given via constructor?
+    // Complain if input dir is also given via --input argument.
+    if (_isInitialized) {
+      if (argResults?.options.contains('input') == true) {
+        throw ArgumentError(
+          'The input directory is specified twice: '
+          'One tima via constructor and a second time via --input argument.',
+        );
+      }
+    }
   }
 
   // ...........................................................................
@@ -55,13 +79,29 @@ abstract class GgDirCommand extends Command<void> {
   }
 
   /// The directory to be checked as relative path
-  late Directory inputDirRelative;
+  Directory get inputDirRelative => _inputDirRelative;
 
   /// The directory to be checked as absolute path
-  late Directory inputDir;
+  Directory get inputDir => _inputDir;
 
   /// The name of the directory to be checked
-  late String inputDirName;
+  String get inputDirName => _inputDirName;
+
+  // ...........................................................................
+  late Directory _inputDirRelative;
+  late Directory _inputDir;
+  late String _inputDirName;
+
+  // ...........................................................................
+  bool _isInitialized = false;
+
+  // ...........................................................................
+  void _initInputDir(Directory dir) {
+    _inputDirRelative = dir;
+    _inputDir = Directory(canonicalize(inputDirRelative.path));
+    _inputDirName = basename(canonicalize(inputDirRelative.path));
+    _isInitialized = true;
+  }
 }
 
 // #############################################################################
@@ -70,6 +110,7 @@ class GgDirCommandExample extends GgDirCommand {
   /// Constructor
   GgDirCommandExample({
     required super.log,
+    super.inputDir,
   });
 
   // ...........................................................................

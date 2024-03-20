@@ -18,56 +18,103 @@ void main() {
   late GgDirCommandExample ggDirCommand;
   late Directory d;
 
+  // ...........................................................................
   Directory initTestDir() {
     final tmp = Directory.systemTemp.createTempSync('gg_test');
     d = Directory('${tmp.path}/test');
-    if (d.existsSync()) {
-      d.deleteSync(recursive: true);
-    }
     d.createSync();
     return d;
   }
 
   // ...........................................................................
-  void initCommand() {
-    d = initTestDir();
-
+  void initCommand({Directory? inputDir}) {
     ggDirCommand = GgDirCommandExample(
       log: (msg) {
         messages.add(msg);
       },
+      inputDir: inputDir,
     );
     runner.addCommand(ggDirCommand);
   }
 
   // ...........................................................................
   setUp(() {
+    initTestDir();
     runner = CommandRunner<void>('test', 'test');
     messages.clear();
   });
 
+  // ...........................................................................
+  tearDown(() {
+    d.deleteSync(recursive: true);
+  });
+
   group('GgDirCommandExample', () {
     // #########################################################################
-    group('run(), isCommited()', () {
+    group('run()', () {
       group('should throw', () {
-        // .....................................................................
-        for (final argName in ['-i', '--input']) {
-          group('with $argName xyz', () {
-            test('should log if directory does not exist', () async {
-              initCommand();
-              await expectLater(
-                runner.run(['example', argName, 'xyz']),
-                throwsA(
-                  isA<ArgumentError>().having(
-                    (e) => e.message,
-                    'message',
-                    'Directory "xyz" does not exist.',
+        group('when input directory does not exist', () {
+          // ...................................................................
+          for (final argName in ['-i', '--input']) {
+            group('with $argName xyz', () {
+              test('should log if directory does not exist', () async {
+                initCommand();
+                await expectLater(
+                  runner.run(['example', argName, 'xyz']),
+                  throwsA(
+                    isA<ArgumentError>().having(
+                      (e) => e.message,
+                      'message',
+                      'Directory "xyz" does not exist.',
+                    ),
                   ),
-                ),
-              );
+                );
+              });
             });
+          }
+        });
+
+        group('when input directory is specified twice', () {
+          test(
+              'i.e. one time via constructor '
+              'and a second time via --input argument', () async {
+            initCommand(inputDir: d);
+            await expectLater(
+              runner.run(['example', '--input', d.path]),
+              throwsA(
+                isA<ArgumentError>().having(
+                  (e) => e.message,
+                  'message',
+                  'The input directory is specified twice: '
+                      'One tima via constructor '
+                      'and a second time via --input argument.',
+                ),
+              ),
+            );
           });
-        }
+        });
+      });
+
+      group('should log a message', () {
+        test('when input directory is given via constructor', () async {
+          initCommand(inputDir: d);
+          await ggDirCommand.run();
+          expect(
+            messages,
+            ['Example executed for "test".'],
+            reason: messages.join('\n'),
+          );
+        });
+
+        test('when input directory is given via --input argument', () async {
+          initCommand();
+          await runner.run(['example', '--input', d.path]);
+          expect(
+            messages,
+            ['Example executed for "test".'],
+            reason: messages.join('\n'),
+          );
+        });
       });
     });
 
