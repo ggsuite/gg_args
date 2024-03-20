@@ -132,5 +132,18 @@ void main() {
       final absoluteDir = Directory(canonicalize(d.path));
       expect(ggDirCommand.inputDir.path, absoluteDir.path);
     });
+
+    group('set inputDir', () {
+      test('should initialize inputDir', () {
+        initCommand(inputDir: null);
+        ggDirCommand.inputDir = d;
+        expect(ggDirCommand.inputDir.path, d.path);
+        expect(ggDirCommand.inputDirName, 'test');
+
+        ggDirCommand.inputDir = Directory('/a/b/c');
+        expect(ggDirCommand.inputDir.path, '/a/b/c');
+        expect(ggDirCommand.inputDirName, 'c');
+      });
+    });
   });
 }

@@ -85,6 +85,8 @@ abstract class GgDirCommand extends Command<void> {
   /// The directory to be checked as absolute path
   Directory get inputDir => _inputDir;
 
+  set inputDir(Directory dir) => _initInputDir(dir);
+
   /// The name of the directory to be checked
   String get inputDirName => _inputDirName;
 
