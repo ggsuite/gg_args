@@ -8,14 +8,12 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:gg_args/gg_args.dart';
-import 'package:path/path.dart';
-
 import 'package:test/test.dart';
 
 void main() {
   final messages = <String>[];
   late CommandRunner<void> runner;
-  late GgDirCommandExample ggDirCommand;
+  late DirCommandExample dirCommand;
   late Directory d;
 
   // ...........................................................................
@@ -28,13 +26,12 @@ void main() {
 
   // ...........................................................................
   void initCommand({Directory? inputDir}) {
-    ggDirCommand = GgDirCommandExample(
+    dirCommand = DirCommandExample(
       log: (msg) {
         messages.add(msg);
       },
-      inputDir: inputDir,
     );
-    runner.addCommand(ggDirCommand);
+    runner.addCommand(dirCommand);
   }
 
   // ...........................................................................
@@ -49,7 +46,7 @@ void main() {
     d.deleteSync(recursive: true);
   });
 
-  group('GgDirCommandExample', () {
+  group('DirCommandExample', () {
     // #########################################################################
     group('run()', () {
       group('should throw', () {
@@ -73,35 +70,15 @@ void main() {
             });
           }
         });
-
-        group('when input directory is specified twice', () {
-          test(
-              'i.e. one time via constructor '
-              'and a second time via --input argument', () async {
-            initCommand(inputDir: d);
-            await expectLater(
-              runner.run(['example', '--input', d.path]),
-              throwsA(
-                isA<ArgumentError>().having(
-                  (e) => e.message,
-                  'message',
-                  'The input directory is specified twice: '
-                      'One tima via constructor '
-                      'and a second time via --input argument.',
-                ),
-              ),
-            );
-          });
-        });
       });
 
       group('should log a message', () {
         test('when input directory is given via constructor', () async {
           initCommand(inputDir: d);
-          await ggDirCommand.run();
+          await dirCommand.run(directory: Directory('./test/fixtures'));
           expect(
             messages,
-            ['Example executed for "test".'],
+            ['Example executed for "fixtures".'],
             reason: messages.join('\n'),
           );
         });
@@ -122,28 +99,16 @@ void main() {
     test('should succeed', () async {
       initTestDir();
       initCommand();
-      await runner.run(['example', '--input', d.path]);
+      await runner.run(['example', '--input', './test']);
       expect(
         messages,
         ['Example executed for "test".'],
         reason: messages.join('\n'),
       );
-      expect(ggDirCommand.inputDirRelative.path, d.path);
-      final absoluteDir = Directory(canonicalize(d.path));
-      expect(ggDirCommand.inputDir.path, absoluteDir.path);
-    });
-
-    group('set inputDir', () {
-      test('should initialize inputDir', () {
-        initCommand(inputDir: null);
-        ggDirCommand.inputDir = d;
-        expect(ggDirCommand.inputDir.path, d.path);
-        expect(ggDirCommand.inputDirName, 'test');
-
-        ggDirCommand.inputDir = Directory('/a/b/c');
-        expect(ggDirCommand.inputDir.path, '/a/b/c');
-        expect(ggDirCommand.inputDirName, 'c');
-      });
+      expect(
+        dirCommand.absolute(dirCommand.dir()).path,
+        endsWith('gg_args/test'),
+      );
     });
   });
 }

@@ -1,12 +1,16 @@
 # Change Log
 
+## 1.1.3
+
+- Rework DirCommand
+
 ## 1.1.2
 
 - Allow to set inputDir after initialization
 
 ## 1.1.1
 
-- `GgDirCommand`: Input directory can also be specified via constructor.
+- `DirCommand`: Input directory can also be specified via constructor.
 
 ## 1.0.8
 
