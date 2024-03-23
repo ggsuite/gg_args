@@ -7,6 +7,7 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:gg_log/gg_log.dart';
 import 'package:path/path.dart';
 
 // #############################################################################
@@ -14,7 +15,7 @@ import 'package:path/path.dart';
 abstract class DirCommand<T> extends Command<T> {
   /// Constructor
   DirCommand({
-    required this.log,
+    required this.ggLog,
     required this.name,
     required this.description,
   }) {
@@ -23,7 +24,7 @@ abstract class DirCommand<T> extends Command<T> {
 
   // .........................................................................
   /// The log function
-  final void Function(String message) log;
+  final GgLog ggLog;
 
   // ...........................................................................
   /// The name of the command
@@ -37,7 +38,7 @@ abstract class DirCommand<T> extends Command<T> {
   // ...........................................................................
   /// See [DirCommandExample] how to override this method
   @override
-  Future<T> run({Directory? directory});
+  Future<T> run({Directory? directory, GgLog? ggLog});
 
   // .........................................................................
   /// Returns true if the directory exists
@@ -78,7 +79,7 @@ abstract class DirCommand<T> extends Command<T> {
 class DirCommandExample extends DirCommand<void> {
   /// Constructor
   DirCommandExample({
-    required super.log,
+    required super.ggLog,
   }) : super(
           name: 'example',
           description: 'This is an example directory command.',
@@ -86,9 +87,10 @@ class DirCommandExample extends DirCommand<void> {
 
   // ...........................................................................
   @override
-  Future<void> run({Directory? directory}) async {
+  Future<void> run({Directory? directory, GgLog? ggLog}) async {
+    ggLog ??= this.ggLog;
     final inputDir = dir(directory);
     await check(directory: inputDir);
-    super.log('Example executed for "${dirName(inputDir)}".');
+    ggLog.call('Example executed for "${dirName(inputDir)}".');
   }
 }

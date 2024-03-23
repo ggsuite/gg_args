@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.4
+
+- Add `GgLog`
+
 ## 1.1.3
 
 - Rework DirCommand

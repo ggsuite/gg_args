@@ -27,7 +27,7 @@ void main() {
   // ...........................................................................
   void initCommand({Directory? inputDir}) {
     dirCommand = DirCommandExample(
-      log: (msg) {
+      ggLog: (msg) {
         messages.add(msg);
       },
     );
