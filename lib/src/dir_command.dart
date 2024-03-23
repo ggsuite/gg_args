@@ -8,6 +8,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:gg_log/gg_log.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 
 // #############################################################################
@@ -36,9 +37,19 @@ abstract class DirCommand<T> extends Command<T> {
   final String description;
 
   // ...........................................................................
-  /// See [DirCommandExample] how to override this method
+  @mustCallSuper
   @override
-  Future<T> run({Directory? directory, GgLog? ggLog});
+  Future<T> run() {
+    return exec(directory: dirFromArgs, ggLog: ggLog);
+  }
+
+  // ...........................................................................
+  /// Must be implemented in subclasses
+  /// See [DirCommandExample] how to override this method
+  Future<T> exec({
+    required Directory directory,
+    required GgLog ggLog,
+  });
 
   // .........................................................................
   /// Returns true if the directory exists
@@ -53,10 +64,10 @@ abstract class DirCommand<T> extends Command<T> {
   }
 
   // ...........................................................................
-  /// Returns [directory] or if null the directory from the arguments
-  Directory dir([Directory? directory]) =>
-      directory ?? Directory(argResults!['input'] as String);
+  /// Returns the directory from the command line arguments
+  Directory get dirFromArgs => Directory(argResults!['input'] as String);
 
+  // ...........................................................................
   /// the input directory as absolute path
   Directory absolute(Directory dir) => Directory(canonicalize(dir.path));
 
@@ -87,10 +98,11 @@ class DirCommandExample extends DirCommand<void> {
 
   // ...........................................................................
   @override
-  Future<void> run({Directory? directory, GgLog? ggLog}) async {
-    ggLog ??= this.ggLog;
-    final inputDir = dir(directory);
-    await check(directory: inputDir);
-    ggLog.call('Example executed for "${dirName(inputDir)}".');
+  Future<void> exec({
+    required Directory directory,
+    required GgLog ggLog,
+  }) async {
+    await check(directory: directory);
+    ggLog.call('Example executed for "${dirName(directory)}".');
   }
 }

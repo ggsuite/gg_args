@@ -75,7 +75,10 @@ void main() {
       group('should log a message', () {
         test('when input directory is given via constructor', () async {
           initCommand(inputDir: d);
-          await dirCommand.run(directory: Directory('./test/fixtures'));
+          await dirCommand.exec(
+            directory: Directory('./test/fixtures'),
+            ggLog: messages.add,
+          );
           expect(
             messages,
             ['Example executed for "fixtures".'],
@@ -106,7 +109,7 @@ void main() {
         reason: messages.join('\n'),
       );
       expect(
-        dirCommand.absolute(dirCommand.dir()).path,
+        dirCommand.absolute(dirCommand.dirFromArgs).path,
         endsWith('gg_args/test'),
       );
     });
