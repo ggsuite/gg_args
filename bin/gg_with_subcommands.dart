@@ -6,16 +6,17 @@
 // found in the LICENSE file in the root of this package.
 
 import 'package:gg_args/gg_args.dart';
+import 'package:gg_log/gg_log.dart';
 import '../test/fixtures/command_with_sub_commands.dart';
 
 // .............................................................................
 Future<void> runWithSubCommands({
   required List<String> args,
-  required void Function(String msg) log,
+  required GgLog ggLog,
 }) async {
   final runner = GgCommandRunner(
-    command: CommandWithSubCommands(log: log),
-    log: log,
+    command: CommandWithSubCommands(ggLog: ggLog),
+    ggLog: ggLog,
   );
 
   await runner.run(args: args);
@@ -23,5 +24,5 @@ Future<void> runWithSubCommands({
 
 // .............................................................................
 Future<void> main(List<String> args) async {
-  await runWithSubCommands(args: args, log: print);
+  await runWithSubCommands(args: args, ggLog: print);
 }

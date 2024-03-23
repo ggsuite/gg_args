@@ -6,13 +6,14 @@
 
 import 'package:args/command_runner.dart';
 import 'package:colorize/colorize.dart';
+import 'package:gg_log/gg_log.dart';
 
 /// A command runner that automatically forwards to a single sub command.
 class GgCommandRunner {
   /// Constructor
   GgCommandRunner({
     required this.command,
-    required this.log,
+    required this.ggLog,
   });
 
   // ...........................................................................
@@ -44,7 +45,7 @@ class GgCommandRunner {
       var msg = e.toString().replaceAll('Exception: ', '');
       msg = _colorizeMissingParam(msg);
       msg = _colorizeMissingArgument(msg);
-      log(msg);
+      ggLog(msg);
     }
   }
 
@@ -109,5 +110,5 @@ class GgCommandRunner {
   final Command<dynamic> command;
 
   /// The logger
-  final void Function(String msg) log;
+  final GgLog ggLog;
 }

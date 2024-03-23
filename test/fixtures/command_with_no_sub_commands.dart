@@ -5,17 +5,18 @@
 // found in the LICENSE file in the root of this package.
 
 import 'package:args/command_runner.dart';
+import 'package:gg_log/gg_log.dart';
 
 // #############################################################################
 /// The command line interface for GgAbc
 class CommandWithNoSubCommands extends Command<dynamic> {
   /// Constructor
-  CommandWithNoSubCommands({required this.log}) {
+  CommandWithNoSubCommands({required this.ggLog}) {
     _addArgs();
   }
 
   /// The log function
-  final void Function(String message) log;
+  final GgLog ggLog;
 
   // ...........................................................................
   @override
@@ -28,7 +29,7 @@ class CommandWithNoSubCommands extends Command<dynamic> {
   @override
   Future<void> run() async {
     var param = argResults?['param'] as String;
-    log('Running "$name" with param: "$param"');
+    ggLog('Running "$name" with param: "$param"');
   }
 
   // ...........................................................................

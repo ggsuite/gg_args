@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.7
+
+- Use GgLog
+
 ## 1.1.5
 
 - Add mandatory `exec(directory, ggLog)` method

@@ -7,12 +7,13 @@
 import 'dart:async';
 
 import 'package:args/command_runner.dart';
+import 'package:gg_log/gg_log.dart';
 
 // #############################################################################
 class SubCommand extends Command<dynamic> {
   SubCommand({
     required this.name,
-    required this.log,
+    required this.ggLog,
   }) {
     _addArgs();
   }
@@ -20,7 +21,7 @@ class SubCommand extends Command<dynamic> {
   @override
   final String name;
 
-  void Function(String message) log;
+  final GgLog ggLog;
 
   @override
   String get description => 'description of $name';
@@ -29,7 +30,7 @@ class SubCommand extends Command<dynamic> {
   Future<void> run() async {
     final param = argResults?['param'] as String;
 
-    log('Running "$name" with param "$param"');
+    ggLog('Running "$name" with param "$param"');
   }
 
   // ...........................................................................
@@ -48,13 +49,13 @@ class SubCommand extends Command<dynamic> {
 /// The command line interface for GgAbc
 class CommandWithSubCommands extends Command<dynamic> {
   /// Constructor
-  CommandWithSubCommands({required this.log}) {
-    addSubcommand(SubCommand(name: 'sub1', log: log));
-    addSubcommand(SubCommand(name: 'sub2', log: log));
+  CommandWithSubCommands({required this.ggLog}) {
+    addSubcommand(SubCommand(name: 'sub1', ggLog: ggLog));
+    addSubcommand(SubCommand(name: 'sub2', ggLog: ggLog));
   }
 
   /// The log function
-  final void Function(String message) log;
+  final GgLog ggLog;
 
   // ...........................................................................
   @override

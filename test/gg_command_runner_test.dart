@@ -83,11 +83,11 @@ void main() {
             final messages = <String>[];
 
             await capturePrint(
-              log: (x) => messages.add(x),
+              ggLog: messages.add,
               code: () async {
                 await runWithoutSubCommands(
                   args: [],
-                  log: (x) => messages.add(x),
+                  ggLog: messages.add,
                 );
               },
             );
@@ -112,11 +112,11 @@ void main() {
               final messages = <String>[];
 
               await capturePrint(
-                log: (x) => messages.add(x),
+                ggLog: messages.add,
                 code: () async {
                   await runWithoutSubCommands(
                     args: ['--help'],
-                    log: (x) => messages.add(x),
+                    ggLog: messages.add,
                   );
                 },
               );
@@ -139,11 +139,11 @@ void main() {
             // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
             await capturePrint(
-              log: (x) => messages.add(x),
+              ggLog: messages.add,
               code: () async {
                 await runWithoutSubCommands(
                   args: ['--param'],
-                  log: messages.add,
+                  ggLog: messages.add,
                 );
               },
             );
@@ -167,11 +167,11 @@ void main() {
             // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
             await capturePrint(
-              log: (x) => messages.add(x),
+              ggLog: messages.add,
               code: () async {
                 await runWithoutSubCommands(
                   args: ['--param', '5'],
-                  log: messages.add,
+                  ggLog: messages.add,
                 );
               },
             );
@@ -250,11 +250,11 @@ void main() {
             final messages = <String>[];
 
             await capturePrint(
-              log: (x) => messages.add(x),
+              ggLog: messages.add,
               code: () async {
                 await runWithoutSubCommands(
                   args: [],
-                  log: (x) => messages.add(x),
+                  ggLog: messages.add,
                 );
               },
             );
@@ -279,11 +279,11 @@ void main() {
               final messages = <String>[];
 
               await capturePrint(
-                log: (x) => messages.add(x),
+                ggLog: messages.add,
                 code: () async {
                   await runWithoutSubCommands(
                     args: ['--help'],
-                    log: (x) => messages.add(x),
+                    ggLog: messages.add,
                   );
                 },
               );
@@ -306,11 +306,11 @@ void main() {
             // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
             await capturePrint(
-              log: (x) => messages.add(x),
+              ggLog: messages.add,
               code: () async {
                 await runWithoutSubCommands(
                   args: ['--param'],
-                  log: messages.add,
+                  ggLog: messages.add,
                 );
               },
             );
@@ -334,11 +334,11 @@ void main() {
             // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
             await capturePrint(
-              log: (x) => messages.add(x),
+              ggLog: messages.add,
               code: () async {
                 await runWithoutSubCommands(
                   args: ['--param', '5'],
-                  log: messages.add,
+                  ggLog: messages.add,
                 );
               },
             );

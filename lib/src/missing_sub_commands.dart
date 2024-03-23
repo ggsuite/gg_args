@@ -41,7 +41,7 @@ Future<(List<String> commandList, String? errorMessage)> missingSubCommands({
   final messages = <String>[];
 
   await capturePrint(
-    log: messages.add,
+    ggLog: messages.add,
     code: () => runner.run([command.name, '--help']),
   );
 
