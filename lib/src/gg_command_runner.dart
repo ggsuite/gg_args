@@ -5,7 +5,7 @@
 // found in the LICENSE file in the root of this package.
 
 import 'package:args/command_runner.dart';
-import 'package:colorize/colorize.dart';
+import 'package:gg_console_colors/gg_console_colors.dart';
 import 'package:gg_log/gg_log.dart';
 
 /// A command runner that automatically forwards to a single sub command.
@@ -67,9 +67,9 @@ class GgCommandRunner {
     final after = match.group(3);
 
     // Colorize parts
-    final beforeYellow = Colorize(before).yellow().toString();
-    final paramRed = Colorize(param).red().toString();
-    final afterYellow = Colorize(after!).yellow().toString();
+    final beforeYellow = yellow(before);
+    final paramRed = red(param);
+    final afterYellow = yellow(after!);
 
     return '$beforeYellow$paramRed$afterYellow\n';
   }
@@ -96,11 +96,11 @@ class GgCommandRunner {
     final dot = match.group(5)!;
 
     // Colorize parts
-    final missingYellow = Colorize(missing).yellow().toString();
-    final argumentRed = Colorize(argument).red().toString();
-    final forTextYellow = Colorize(forText).yellow().toString();
-    final paramRed = Colorize(param).red().toString();
-    final dotYellow = Colorize(dot).yellow().toString();
+    final missingYellow = yellow(missing);
+    final argumentRed = red(argument);
+    final forTextYellow = yellow(forText);
+    final paramRed = red(param);
+    final dotYellow = yellow(dot);
 
     return '$missingYellow$argumentRed$forTextYellow$paramRed$dotYellow\n';
   }

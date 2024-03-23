@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.8
+
+- Update GgConsoleColors
+
 ## 1.1.7
 
 - Use GgLog

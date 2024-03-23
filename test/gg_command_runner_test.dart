@@ -7,8 +7,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:colorize/colorize.dart';
 import 'package:gg_capture_print/gg_capture_print.dart';
+import 'package:gg_console_colors/gg_console_colors.dart';
 import 'package:test/test.dart';
 
 import '../bin/gg_with_no_subcommands.dart';
@@ -38,7 +38,7 @@ void main() {
         final stdout = result.stdout as String;
         final expectedLogs = [
           'Invalid argument(s):',
-          Colorize('param').red().toString(),
+          red('param'),
           'is mandatory.',
         ];
 
@@ -94,7 +94,7 @@ void main() {
 
             final expectedLogs = [
               'Invalid argument(s):',
-              Colorize('param').red().toString(),
+              red('param'),
               'is mandatory.',
             ];
 
@@ -152,7 +152,7 @@ void main() {
               'Missing',
               'argument',
               'for',
-              Colorize('param').red().toString(),
+              red('param'),
             ];
 
             for (final expectedLog in expectedLogs) {
@@ -205,7 +205,7 @@ void main() {
         final stdout = result.stdout as String;
         final expectedLogs = [
           'Invalid argument(s):',
-          Colorize('param').red().toString(),
+          red('param'),
           'is mandatory.',
         ];
 
@@ -261,7 +261,7 @@ void main() {
 
             final expectedLogs = [
               'Invalid argument(s):',
-              Colorize('param').red().toString(),
+              red('param'),
               'is mandatory.',
             ];
 
@@ -317,9 +317,9 @@ void main() {
 
             final expectedLogs = [
               'Missing',
-              Colorize('argument').red().toString(),
+              red('argument'),
               'for',
-              Colorize('param').red().toString(),
+              red('param'),
             ];
 
             for (final expectedLog in expectedLogs) {
