@@ -1,6 +1,6 @@
 name: gg_args
 description: Additions and helpers to the args packages needed by various of our projects.
-version: 1.1.8
+version: 1.1.9
 repository: https://github.com/inlavigo/gg_args.git
 
 environment:
@@ -11,12 +11,12 @@ dependencies:
   gg_capture_print: ^1.0.1
   gg_console_colors: ^2.0.0
   gg_log: ^1.0.0
-  meta: ^1.12.0
+  meta: ^1.11.0
   path: ^1.8.0
   recase: ^4.1.0
 
 dev_dependencies:
-  gg_check: ^1.0.2
+  gg_install_gg: ^1.0.1
   lints: ^3.0.0
   pana: ^0.22.1
   test: ^1.24.0

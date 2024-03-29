@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.9
+
+- Set back meta to version 1.11.0
+
 ## 1.1.8
 
 - Update GgConsoleColors
