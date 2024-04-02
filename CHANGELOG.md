@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.10
+
+- Set exitCode 1 on error
+
 ## 1.1.9
 
 - Set back meta to version 1.11.0

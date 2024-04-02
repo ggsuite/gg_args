@@ -135,7 +135,7 @@ void main() {
 
         // #####################################################################
         group('with args = [--param]', () {
-          test('should print error', () async {
+          test('should print error and set exitCode to 1', () async {
             // Execute bin/gg_with_no_subcommands.dart and check if it prints help
             final messages = <String>[];
             await capturePrint(
@@ -158,6 +158,8 @@ void main() {
             for (final expectedLog in expectedLogs) {
               expect(hasLog(messages, expectedLog), true);
             }
+
+            expect(exitCode, 1);
           });
         });
 

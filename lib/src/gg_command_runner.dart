@@ -4,6 +4,8 @@
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
+import 'dart:io';
+
 import 'package:args/command_runner.dart';
 import 'package:gg_console_colors/gg_console_colors.dart';
 import 'package:gg_log/gg_log.dart';
@@ -46,6 +48,7 @@ class GgCommandRunner {
       msg = _colorizeMissingParam(msg);
       msg = _colorizeMissingArgument(msg);
       ggLog(msg);
+      exitCode = 1;
     }
   }
 
