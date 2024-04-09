@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Removed
+
+- 'Pipline: Disable cache'
+
 ## [1.1.11] - 2024-04-09
 
 ### Changed
@@ -67,4 +73,5 @@
 
 - Initial version.
 
+[Unreleased]: https://github.com/inlavigo/gg_args/compare/1.1.11...HEAD
 [1.1.11]: https://github.com/inlavigo/gg_args/compare/1.1.10...1.1.11
