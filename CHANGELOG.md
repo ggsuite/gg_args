@@ -1,12 +1,13 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.11] - 2024-04-09
 
 ### Changed
 
 - Rework changelog
 - 'Github Actions Pipeline'
 - 'Github Actions Pipeline: Add SDK file containing flutter into .github/workflows to make github installing flutter and not dart SDK'
+- Update version
 
 ## 1.1.10 - 2024-01-01
 
@@ -66,4 +67,4 @@
 
 - Initial version.
 
-[Unreleased]: https://github.com/inlavigo/gg_args/compare/1.1.10...HEAD
+[1.1.11]: https://github.com/inlavigo/gg_args/compare/1.1.10...1.1.11
