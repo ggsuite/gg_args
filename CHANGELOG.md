@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.12] - 2024-04-10
 
 ### Removed
 
@@ -73,5 +73,5 @@
 
 - Initial version.
 
-[Unreleased]: https://github.com/inlavigo/gg_args/compare/1.1.11...HEAD
+[1.1.12]: https://github.com/inlavigo/gg_args/compare/1.1.11...1.1.12
 [1.1.11]: https://github.com/inlavigo/gg_args/compare/1.1.10...1.1.11
