@@ -51,16 +51,19 @@ abstract class DirCommand<T> extends Command<dynamic> {
   Future<T> exec({
     required Directory directory,
     required GgLog ggLog,
-  });
+  }) async {
+    final result = await get(directory: directory, ggLog: ggLog);
+    ggLog(result.toString());
+    return result;
+  }
 
   // ...........................................................................
-  /// Can be implemented in subclasses
-  Future<T?> get({
+  /// Must be implemented in subclasses
+  /// See [DirCommandExample] how to override this method
+  Future<T> get({
     required Directory directory,
     required GgLog ggLog,
-  }) async {
-    return null;
-  }
+  });
 
   // .........................................................................
   /// Returns true if the directory exists
@@ -109,12 +112,11 @@ class DirCommandExample extends DirCommand<bool> {
 
   // ...........................................................................
   @override
-  Future<bool> exec({
+  Future<bool> get({
     required Directory directory,
     required GgLog ggLog,
   }) async {
     await check(directory: directory);
-    ggLog.call('Example executed for "${dirName(directory)}".');
     return true;
   }
 }
@@ -125,7 +127,7 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
   // ...........................................................................
   /// Makes [exec] successful or not
   void mockExec({
-    T? result,
+    required T result,
     GgLog? ggLog,
     Directory? directory,
     bool doThrow = false,
@@ -159,7 +161,7 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
   // ...........................................................................
   /// Mocks the result of the get command
   void mockGet({
-    T? result,
+    required T result,
     bool doThrow = false,
     Directory? directory,
     GgLog? ggLog,

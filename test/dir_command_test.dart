@@ -83,7 +83,7 @@ void main() {
           );
           expect(
             messages,
-            ['Example executed for "fixtures".'],
+            ['true'],
             reason: messages.join('\n'),
           );
         });
@@ -91,11 +91,11 @@ void main() {
         test('when input directory is given via --input argument', () async {
           initCommand();
           await runner.run(['example', '--input', d.path]);
-          expect(messages.last, 'Example executed for "test".');
+          expect(messages.last, 'true');
 
           // Run again
           await runner.run(['example', '--input', d.path]);
-          expect(messages.last, 'Example executed for "test".');
+          expect(messages.last, 'true');
         });
       });
     });
@@ -105,7 +105,7 @@ void main() {
       test('should return null currently', () async {
         initCommand();
         final result = await dirCommand.get(directory: d, ggLog: messages.add);
-        expect(result, isNull);
+        expect(result, true);
       });
     });
 
@@ -116,13 +116,22 @@ void main() {
       await runner.run(['example', '--input', './test']);
       expect(
         messages,
-        ['Example executed for "test".'],
+        ['true'],
         reason: messages.join('\n'),
       );
       expect(
         dirCommand.absolute(dirCommand.dirFromArgs).path,
         endsWith('gg_args/test'),
       );
+    });
+
+    // #########################################################################
+    group('dirName(dir)', () {
+      test('should return the right dir name', () {
+        initCommand();
+        final dirName = dirCommand.dirName(Directory('test/a/b/cde'));
+        expect(dirName, 'cde');
+      });
     });
   });
 
@@ -158,6 +167,7 @@ void main() {
           test('doThrow: true', () async {
             final mock = MockDirCommand<bool>();
             mock.mockExec(
+              result: true,
               directory: d,
               ggLog: messages.add,
               doThrow: true,
@@ -175,6 +185,7 @@ void main() {
           test('no params', () async {
             final mock = MockDirCommand<bool>();
             mock.mockExec(
+              result: true,
               doThrow: true,
             );
 
@@ -218,6 +229,7 @@ void main() {
       test('should throw when doThrow is true', () async {
         final dirCommand = MockDirCommand<int>();
         dirCommand.mockGet(
+          result: 42,
           directory: d,
           ggLog: messages.add,
           doThrow: true,
