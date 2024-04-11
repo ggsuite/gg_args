@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- finetune class hierarchy
+
 ## [1.1.15] - 2024-04-11
 
 ### Added
@@ -91,6 +97,7 @@
 
 - Initial version.
 
+[Unreleased]: https://github.com/inlavigo/gg_args/compare/1.1.15...HEAD
 [1.1.15]: https://github.com/inlavigo/gg_args/compare/1.1.14...1.1.15
 [1.1.14]: https://github.com/inlavigo/gg_args/compare/1.1.13...1.1.14
 [1.1.13]: https://github.com/inlavigo/gg_args/compare/1.1.12...1.1.13

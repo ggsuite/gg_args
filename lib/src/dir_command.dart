@@ -15,7 +15,7 @@ import 'package:path/path.dart';
 
 // #############################################################################
 /// Base class for all ggGit commands
-abstract class DirCommand<T> extends Command<T> {
+abstract class DirCommand<T> extends Command<dynamic> {
   /// Constructor
   DirCommand({
     required this.ggLog,

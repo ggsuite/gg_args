@@ -13,7 +13,7 @@ import 'package:test/test.dart';
 
 void main() {
   final messages = <String>[];
-  late CommandRunner<bool> runner;
+  late CommandRunner<dynamic> runner;
   late DirCommandExample dirCommand;
   late Directory d;
 
@@ -38,7 +38,7 @@ void main() {
   // ...........................................................................
   setUp(() {
     initTestDir();
-    runner = CommandRunner<bool>('test', 'test');
+    runner = CommandRunner<dynamic>('test', 'test');
     messages.clear();
     registerFallbackValue(d);
   });
