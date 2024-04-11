@@ -118,8 +118,9 @@ class MockDirCommand extends Mock implements DirCommand<void> {
     required bool success,
     required GgLog ggLog,
     required Directory directory,
-    String message = 'Dir command executed',
   }) {
+    final message = runtimeType.toString().replaceAll('Mock', '');
+
     when(
       () => exec(
         directory: any(

@@ -119,7 +119,7 @@ void main() {
 
   group('MockDirCommand', () {
     group('mockSuccess', () {
-      group('should return »✅ Did work!«', () {
+      group('should return »✅ DirCommand!«', () {
         group('when called with', () {
           test('success: true', () async {
             final mock = MockDirCommand();
@@ -127,10 +127,9 @@ void main() {
               success: true,
               directory: d,
               ggLog: messages.add,
-              message: 'Did work!',
             );
             await mock.exec(directory: d, ggLog: messages.add);
-            expect(messages.first, contains('✅ Did work!'));
+            expect(messages.first, contains('✅ DirCommand'));
           });
         });
       });
@@ -143,7 +142,6 @@ void main() {
               success: false,
               directory: d,
               ggLog: messages.add,
-              message: 'Did work!',
             );
 
             late String exception;
@@ -152,7 +150,7 @@ void main() {
             } catch (e) {
               exception = e.toString();
             }
-            expect(exception, contains('❌ Did work!'));
+            expect(exception, contains('❌ DirCommand'));
           });
         });
       });
