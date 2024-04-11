@@ -126,11 +126,12 @@ void main() {
     });
   });
 
+  // ###########################################################################
   group('MockDirCommand', () {
     group('mockSuccess', () {
       group('should return »✅ DirCommand!«', () {
         group('when called with', () {
-          test('success: true', () async {
+          test('result: true', () async {
             final mock = MockDirCommand<bool>();
             mock.mockExec(
               result: true,
@@ -140,16 +141,40 @@ void main() {
             await mock.exec(directory: d, ggLog: messages.add);
             expect(messages.first, contains('✅ DirCommand'));
           });
+
+          test('no params', () async {
+            final mock = MockDirCommand<bool>();
+            mock.mockExec(
+              result: true,
+            );
+            await mock.exec(directory: d, ggLog: messages.add);
+            expect(messages.first, contains('✅ DirCommand'));
+          });
         });
       });
 
       group('should throw »❌ Did work!', () {
         group('when called with', () {
-          test('success: false', () async {
+          test('doThrow: true', () async {
             final mock = MockDirCommand<bool>();
             mock.mockExec(
               directory: d,
               ggLog: messages.add,
+              doThrow: true,
+            );
+
+            late String exception;
+            try {
+              await mock.exec(directory: d, ggLog: messages.add);
+            } catch (e) {
+              exception = e.toString();
+            }
+            expect(exception, contains('❌ DirCommand'));
+          });
+
+          test('no params', () async {
+            final mock = MockDirCommand<bool>();
+            mock.mockExec(
               doThrow: true,
             );
 
@@ -166,16 +191,28 @@ void main() {
     });
 
     group('mockGet', () {
-      test('should make get returning a desired value', () async {
-        final dirCommand = MockDirCommand<int>();
-        dirCommand.mockGet(
-          result: 42,
-          directory: d,
-          ggLog: messages.add,
-          message: 'Log this',
-        );
-        expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
-        expect(messages, ['Log this']);
+      group('should make get returning a desired value', () {
+        test('when called with ggLog and directory', () async {
+          final dirCommand = MockDirCommand<int>();
+          dirCommand.mockGet(
+            result: 42,
+            directory: d,
+            ggLog: messages.add,
+            message: 'Log this',
+          );
+          expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
+          expect(messages, ['Log this']);
+        });
+
+        test('when called without ggLog and directory', () async {
+          final dirCommand = MockDirCommand<int>();
+          dirCommand.mockGet(
+            result: 42,
+            message: 'Log this',
+          );
+          expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
+          expect(messages, ['Log this']);
+        });
       });
 
       test('should throw when doThrow is true', () async {

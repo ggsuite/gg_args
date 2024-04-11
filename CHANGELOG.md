@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.17] - 2024-04-11
+
+### Added
+
+- Generalized mocks
+
 ## [1.1.16] - 2024-04-11
 
 ### Changed
@@ -97,6 +103,7 @@
 
 - Initial version.
 
+[1.1.17]: https://github.com/inlavigo/gg_args/compare/1.1.16...1.1.17
 [1.1.16]: https://github.com/inlavigo/gg_args/compare/1.1.15...1.1.16
 [1.1.15]: https://github.com/inlavigo/gg_args/compare/1.1.14...1.1.15
 [1.1.14]: https://github.com/inlavigo/gg_args/compare/1.1.13...1.1.14

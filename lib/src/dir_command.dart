@@ -126,8 +126,8 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
   /// Makes [exec] successful or not
   void mockExec({
     T? result,
-    required GgLog ggLog,
-    required Directory directory,
+    GgLog? ggLog,
+    Directory? directory,
     bool doThrow = false,
   }) {
     final className =
@@ -138,17 +138,19 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
         directory: any(
           named: 'directory',
           that: predicate<Directory>(
-            (d) => d.path == directory.path,
+            (d) => directory == null || d.path == directory.path,
           ),
         ),
-        ggLog: any(named: 'ggLog'),
+        ggLog: ggLog ?? any(named: 'ggLog'),
       ),
     ).thenAnswer((invocation) async {
       if (doThrow) {
         throw Exception('❌ $className');
       } else {
         final ggLog = invocation.namedArguments[const Symbol('ggLog')];
-        ggLog('✅ $className');
+        if (ggLog != null) {
+          ggLog('✅ $className');
+        }
       }
       return Future.value(result);
     });
@@ -159,8 +161,8 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
   void mockGet({
     T? result,
     bool doThrow = false,
-    required Directory directory,
-    required GgLog ggLog,
+    Directory? directory,
+    GgLog? ggLog,
     String? message,
   }) {
     final className =
@@ -168,11 +170,22 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
 
     final exceptionMessage = message ?? className;
 
-    when(() => get(ggLog: ggLog, directory: directory)).thenAnswer((_) async {
+    when(
+      () => get(
+        ggLog: ggLog ?? any(named: 'ggLog'),
+        directory: any(
+          named: 'directory',
+          that: predicate<Directory>(
+            (d) => directory == null || d.path == directory.path,
+          ),
+        ),
+      ),
+    ).thenAnswer((invocation) async {
       if (doThrow) {
         throw Exception('❌ $exceptionMessage');
       } else {
-        if (message != null) {
+        final ggLog = invocation.namedArguments[const Symbol('ggLog')];
+        if (ggLog != null && message != null) {
           ggLog(message);
         }
       }
