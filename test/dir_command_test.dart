@@ -13,7 +13,7 @@ import 'package:test/test.dart';
 
 void main() {
   final messages = <String>[];
-  late CommandRunner<void> runner;
+  late CommandRunner<bool> runner;
   late DirCommandExample dirCommand;
   late Directory d;
 
@@ -38,7 +38,7 @@ void main() {
   // ...........................................................................
   setUp(() {
     initTestDir();
-    runner = CommandRunner<void>('test', 'test');
+    runner = CommandRunner<bool>('test', 'test');
     messages.clear();
     registerFallbackValue(d);
   });
@@ -101,6 +101,15 @@ void main() {
     });
 
     // #########################################################################
+    group('get()', () {
+      test('should return null currently', () async {
+        initCommand();
+        final result = await dirCommand.get(directory: d, ggLog: messages.add);
+        expect(result, isNull);
+      });
+    });
+
+    // #########################################################################
     test('should succeed', () async {
       initTestDir();
       initCommand();
@@ -122,9 +131,9 @@ void main() {
       group('should return »✅ DirCommand!«', () {
         group('when called with', () {
           test('success: true', () async {
-            final mock = MockDirCommand();
+            final mock = MockDirCommand<bool>();
             mock.mockExec(
-              success: true,
+              result: true,
               directory: d,
               ggLog: messages.add,
             );
@@ -137,11 +146,11 @@ void main() {
       group('should throw »❌ Did work!', () {
         group('when called with', () {
           test('success: false', () async {
-            final mock = MockDirCommand();
+            final mock = MockDirCommand<bool>();
             mock.mockExec(
-              success: false,
               directory: d,
               ggLog: messages.add,
+              doThrow: true,
             );
 
             late String exception;
@@ -153,6 +162,39 @@ void main() {
             expect(exception, contains('❌ DirCommand'));
           });
         });
+      });
+    });
+
+    group('mockGet', () {
+      test('should make get returning a desired value', () async {
+        final dirCommand = MockDirCommand<int>();
+        dirCommand.mockGet(
+          result: 42,
+          directory: d,
+          ggLog: messages.add,
+          message: 'Log this',
+        );
+        expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
+        expect(messages, ['Log this']);
+      });
+
+      test('should throw when doThrow is true', () async {
+        final dirCommand = MockDirCommand<int>();
+        dirCommand.mockGet(
+          directory: d,
+          ggLog: messages.add,
+          doThrow: true,
+          message: 'Message',
+        );
+
+        late String exception;
+        try {
+          await dirCommand.get(directory: d, ggLog: messages.add);
+        } catch (e) {
+          exception = e.toString();
+        }
+
+        expect(exception, contains('❌ Message'));
       });
     });
   });

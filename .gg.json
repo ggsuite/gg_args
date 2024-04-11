@@ -1,1 +1,7 @@
-{"canCommit":{"success":{"hash":3849254534282}},"doCommit":{"success":{"hash":3849254534282}},"canPush":{"success":{"hash":3848781265414}},"doPush":{"success":{"hash":3848781265414}},"canPublish":{"success":{"hash":3848781265414}},"doPublish":{"success":{"hash":3848781265414}}}
+{
+  "canCommit": { "success": { "hash": 3849029441071 } },
+  "doCommit": { "success": { "hash": 3849029441071 } },
+  "canPush": { "success": { "hash": 3849029441071 } },
+  "doPush": { "success": { "hash": 3849029441071 } },
+  "canPublish": { "success": { "hash": 3849029441071 } }
+}

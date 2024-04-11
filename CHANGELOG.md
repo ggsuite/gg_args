@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- extend mocked messages
+
 ## [1.1.14] - 2024-04-11
 
 ### Changed

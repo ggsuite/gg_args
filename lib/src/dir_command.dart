@@ -53,6 +53,15 @@ abstract class DirCommand<T> extends Command<T> {
     required GgLog ggLog,
   });
 
+  // ...........................................................................
+  /// Can be implemented in subclasses
+  Future<T?> get({
+    required Directory directory,
+    required GgLog ggLog,
+  }) async {
+    return null;
+  }
+
   // .........................................................................
   /// Returns true if the directory exists
   Future<void> check({required Directory directory}) async {
@@ -89,7 +98,7 @@ abstract class DirCommand<T> extends Command<T> {
 
 // #############################################################################
 /// Example git command implementation
-class DirCommandExample extends DirCommand<void> {
+class DirCommandExample extends DirCommand<bool> {
   /// Constructor
   DirCommandExample({
     required super.ggLog,
@@ -100,26 +109,29 @@ class DirCommandExample extends DirCommand<void> {
 
   // ...........................................................................
   @override
-  Future<void> exec({
+  Future<bool> exec({
     required Directory directory,
     required GgLog ggLog,
   }) async {
     await check(directory: directory);
     ggLog.call('Example executed for "${dirName(directory)}".');
+    return true;
   }
 }
 
 // #############################################################################
 /// Mock for [DirCommand]
-class MockDirCommand extends Mock implements DirCommand<void> {
+class MockDirCommand<T> extends Mock implements DirCommand<T> {
   // ...........................................................................
   /// Makes [exec] successful or not
   void mockExec({
-    required bool success,
+    T? result,
     required GgLog ggLog,
     required Directory directory,
+    bool doThrow = false,
   }) {
-    final message = runtimeType.toString().replaceAll('Mock', '');
+    final className =
+        runtimeType.toString().replaceAll('Mock', '').split('<').first;
 
     when(
       () => exec(
@@ -132,13 +144,39 @@ class MockDirCommand extends Mock implements DirCommand<void> {
         ggLog: any(named: 'ggLog'),
       ),
     ).thenAnswer((invocation) async {
-      if (!success) {
-        throw Exception('❌ $message');
+      if (doThrow) {
+        throw Exception('❌ $className');
       } else {
         final ggLog = invocation.namedArguments[const Symbol('ggLog')];
-        ggLog('✅ $message');
+        ggLog('✅ $className');
       }
-      return;
+      return Future.value(result);
+    });
+  }
+
+  // ...........................................................................
+  /// Mocks the result of the get command
+  void mockGet({
+    T? result,
+    bool doThrow = false,
+    required Directory directory,
+    required GgLog ggLog,
+    String? message,
+  }) {
+    final className =
+        runtimeType.toString().replaceAll('Mock', '').split('<').first;
+
+    final exceptionMessage = message ?? className;
+
+    when(() => get(ggLog: ggLog, directory: directory)).thenAnswer((_) async {
+      if (doThrow) {
+        throw Exception('❌ $exceptionMessage');
+      } else {
+        if (message != null) {
+          ggLog(message);
+        }
+      }
+      return Future.value(result);
     });
   }
 }
