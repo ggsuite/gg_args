@@ -8,6 +8,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:gg_args/gg_args.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -39,6 +40,7 @@ void main() {
     initTestDir();
     runner = CommandRunner<void>('test', 'test');
     messages.clear();
+    registerFallbackValue(d);
   });
 
   // ...........................................................................
@@ -112,6 +114,48 @@ void main() {
         dirCommand.absolute(dirCommand.dirFromArgs).path,
         endsWith('gg_args/test'),
       );
+    });
+  });
+
+  group('MockDirCommand', () {
+    group('mockSuccess', () {
+      group('should return »✅ Did work!«', () {
+        group('when called with', () {
+          test('success: true', () async {
+            final mock = MockDirCommand();
+            mock.mockExec(
+              success: true,
+              directory: d,
+              ggLog: messages.add,
+              message: 'Did work!',
+            );
+            await mock.exec(directory: d, ggLog: messages.add);
+            expect(messages.first, contains('✅ Did work!'));
+          });
+        });
+      });
+
+      group('should throw »❌ Did work!', () {
+        group('when called with', () {
+          test('success: false', () async {
+            final mock = MockDirCommand();
+            mock.mockExec(
+              success: false,
+              directory: d,
+              ggLog: messages.add,
+              message: 'Did work!',
+            );
+
+            late String exception;
+            try {
+              await mock.exec(directory: d, ggLog: messages.add);
+            } catch (e) {
+              exception = e.toString();
+            }
+            expect(exception, contains('❌ Did work!'));
+          });
+        });
+      });
     });
   });
 }

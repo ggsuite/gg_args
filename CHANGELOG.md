@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.13] - 2024-04-11
+
+### Added
+
+- MockDirCommand
+
 ## [1.1.12] - 2024-04-10
 
 ### Removed
@@ -73,5 +79,6 @@
 
 - Initial version.
 
+[1.1.13]: https://github.com/inlavigo/gg_args/compare/1.1.12...1.1.13
 [1.1.12]: https://github.com/inlavigo/gg_args/compare/1.1.11...1.1.12
 [1.1.11]: https://github.com/inlavigo/gg_args/compare/1.1.10...1.1.11

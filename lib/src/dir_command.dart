@@ -8,7 +8,9 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:gg_log/gg_log.dart';
+import 'package:matcher/expect.dart';
 import 'package:meta/meta.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart';
 
 // #############################################################################
@@ -104,5 +106,38 @@ class DirCommandExample extends DirCommand<void> {
   }) async {
     await check(directory: directory);
     ggLog.call('Example executed for "${dirName(directory)}".');
+  }
+}
+
+// #############################################################################
+/// Mock for [DirCommand]
+class MockDirCommand extends Mock implements DirCommand<void> {
+  // ...........................................................................
+  /// Makes [exec] successful or not
+  void mockExec({
+    required bool success,
+    required GgLog ggLog,
+    required Directory directory,
+    String message = 'Dir command executed',
+  }) {
+    when(
+      () => exec(
+        directory: any(
+          named: 'directory',
+          that: predicate<Directory>(
+            (d) => d.path == directory.path,
+          ),
+        ),
+        ggLog: any(named: 'ggLog'),
+      ),
+    ).thenAnswer((invocation) async {
+      if (!success) {
+        throw Exception('❌ $message');
+      } else {
+        final ggLog = invocation.namedArguments[const Symbol('ggLog')];
+        ggLog('✅ $message');
+      }
+      return;
+    });
   }
 }
