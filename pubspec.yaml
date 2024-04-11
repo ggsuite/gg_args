@@ -1,6 +1,6 @@
 name: gg_args
 description: Additions and helpers to the args packages needed by various of our projects.
-version: 1.1.14
+version: 1.1.15
 repository: https://github.com/inlavigo/gg_args.git
 
 environment:
