@@ -135,6 +135,14 @@ void main() {
     });
   });
 
+  group('VoidDirCommandExample', () {
+    test('should work fine', () async {
+      final voidDirCommand = VoidDirCommandExample(ggLog: messages.add);
+      await voidDirCommand.exec(directory: d, ggLog: messages.add);
+      expect(messages, isEmpty);
+    });
+  });
+
   // ###########################################################################
   group('MockDirCommand', () {
     group('mockSuccess', () {

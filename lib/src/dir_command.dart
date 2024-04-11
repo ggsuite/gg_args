@@ -53,7 +53,11 @@ abstract class DirCommand<T> extends Command<dynamic> {
     required GgLog ggLog,
   }) async {
     final result = await get(directory: directory, ggLog: ggLog);
-    ggLog(result.toString());
+    final resultString = result.toString();
+    if (resultString.isNotEmpty && resultString != 'null') {
+      ggLog(result.toString());
+    }
+
     return result;
   }
 
@@ -118,6 +122,27 @@ class DirCommandExample extends DirCommand<bool> {
   }) async {
     await check(directory: directory);
     return true;
+  }
+}
+
+// #############################################################################
+/// Example git command implementation
+class VoidDirCommandExample extends DirCommand<void> {
+  /// Constructor
+  VoidDirCommandExample({
+    required super.ggLog,
+  }) : super(
+          name: 'void-example',
+          description: 'This is an void example directory command.',
+        );
+
+  // ...........................................................................
+  @override
+  Future<void> get({
+    required Directory directory,
+    required GgLog ggLog,
+  }) async {
+    await check(directory: directory);
   }
 }
 

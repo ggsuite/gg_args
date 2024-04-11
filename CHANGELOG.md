@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.1] - 2024-04-11
+
+### Changed
+
+- print result only if not null
+
 ## [2.0.0] - 2024-04-11
 
 ### Changed
@@ -109,6 +115,7 @@
 
 - Initial version.
 
+[2.0.1]: https://github.com/inlavigo/gg_args/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/inlavigo/gg_args/compare/1.1.17...2.0.0
 [1.1.17]: https://github.com/inlavigo/gg_args/compare/1.1.16...1.1.17
 [1.1.16]: https://github.com/inlavigo/gg_args/compare/1.1.15...1.1.16
