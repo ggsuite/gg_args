@@ -156,6 +156,7 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
     GgLog? ggLog,
     Directory? directory,
     bool doThrow = false,
+    String? message,
   }) {
     final className =
         runtimeType.toString().replaceAll('Mock', '').split('<').first;
@@ -172,11 +173,11 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
       ),
     ).thenAnswer((invocation) async {
       if (doThrow) {
-        throw Exception('❌ $className');
+        throw Exception(message ?? '❌ $className');
       } else {
         final ggLog = invocation.namedArguments[const Symbol('ggLog')];
         if (ggLog != null) {
-          ggLog('✅ $className');
+          ggLog(message ?? '✅ $className');
         }
       }
       return Future.value(result);

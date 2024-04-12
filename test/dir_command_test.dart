@@ -146,17 +146,31 @@ void main() {
   // ###########################################################################
   group('MockDirCommand', () {
     group('mockSuccess', () {
-      group('should return »✅ DirCommand!«', () {
+      group('should succeed', () {
         group('when called with', () {
-          test('result: true', () async {
-            final mock = MockDirCommand<bool>();
-            mock.mockExec(
-              result: true,
-              directory: d,
-              ggLog: messages.add,
-            );
-            await mock.exec(directory: d, ggLog: messages.add);
-            expect(messages.first, contains('✅ DirCommand'));
+          group('result: true', () {
+            test('- without message', () async {
+              final mock = MockDirCommand<bool>();
+              mock.mockExec(
+                result: true,
+                directory: d,
+                ggLog: messages.add,
+              );
+              await mock.exec(directory: d, ggLog: messages.add);
+              expect(messages.first, contains('✅ DirCommand'));
+            });
+
+            test('- with message', () async {
+              final mock = MockDirCommand<bool>();
+              mock.mockExec(
+                result: true,
+                directory: d,
+                ggLog: messages.add,
+                message: 'My message',
+              );
+              await mock.exec(directory: d, ggLog: messages.add);
+              expect(messages.first, contains('My message'));
+            });
           });
 
           test('no params', () async {
@@ -170,24 +184,43 @@ void main() {
         });
       });
 
-      group('should throw »❌ Did work!', () {
+      group('should throw', () {
         group('when called with', () {
-          test('doThrow: true', () async {
-            final mock = MockDirCommand<bool>();
-            mock.mockExec(
-              result: true,
-              directory: d,
-              ggLog: messages.add,
-              doThrow: true,
-            );
+          group('doThrow: true', () {
+            late MockDirCommand<bool> mock;
 
-            late String exception;
-            try {
-              await mock.exec(directory: d, ggLog: messages.add);
-            } catch (e) {
-              exception = e.toString();
+            void initMock({required String? message}) {
+              mock = MockDirCommand<bool>();
+              mock.mockExec(
+                result: true,
+                directory: d,
+                ggLog: messages.add,
+                doThrow: true,
+                message: message,
+              );
             }
-            expect(exception, contains('❌ DirCommand'));
+
+            test('- without message', () async {
+              initMock(message: null);
+              late String exception;
+              try {
+                await mock.exec(directory: d, ggLog: messages.add);
+              } catch (e) {
+                exception = e.toString();
+              }
+              expect(exception, contains('❌ DirCommand'));
+            });
+
+            test('- with message', () async {
+              initMock(message: 'My message');
+              late String exception;
+              try {
+                await mock.exec(directory: d, ggLog: messages.add);
+              } catch (e) {
+                exception = e.toString();
+              }
+              expect(exception, contains('My message'));
+            });
           });
 
           test('no params', () async {
