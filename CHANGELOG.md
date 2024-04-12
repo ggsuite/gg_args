@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Removed
+
+- dependency to gg\_install\_gg, remove ./check script
+
 ## [2.0.2] - 2024-04-12
 
 ### Added
@@ -121,6 +127,7 @@
 
 - Initial version.
 
+[Unreleased]: https://github.com/inlavigo/gg_args/compare/2.0.2...HEAD
 [2.0.2]: https://github.com/inlavigo/gg_args/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/inlavigo/gg_args/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/inlavigo/gg_args/compare/1.1.17...2.0.0
