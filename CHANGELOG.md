@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.4] - 2024-04-13
+
+### Removed
+
+- dependency pana
+
 ## [2.0.3] - 2024-04-13
 
 ### Added
@@ -131,6 +137,7 @@
 
 - Initial version.
 
+[2.0.4]: https://github.com/inlavigo/gg_args/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/inlavigo/gg_args/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/inlavigo/gg_args/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/inlavigo/gg_args/compare/2.0.0...2.0.1
