@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased]
+## [2.0.3] - 2024-04-13
+
+### Added
+
+- defaultReaction for dir command mocks
 
 ### Removed
 
@@ -127,7 +131,7 @@
 
 - Initial version.
 
-[Unreleased]: https://github.com/inlavigo/gg_args/compare/2.0.2...HEAD
+[2.0.3]: https://github.com/inlavigo/gg_args/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/inlavigo/gg_args/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/inlavigo/gg_args/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/inlavigo/gg_args/compare/1.1.17...2.0.0

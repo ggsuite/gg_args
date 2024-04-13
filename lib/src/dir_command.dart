@@ -158,9 +158,6 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
     bool doThrow = false,
     String? message,
   }) {
-    final className =
-        runtimeType.toString().replaceAll('Mock', '').split('<').first;
-
     when(
       () => exec(
         directory: any(
@@ -172,15 +169,12 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
         ggLog: ggLog ?? any(named: 'ggLog'),
       ),
     ).thenAnswer((invocation) async {
-      if (doThrow) {
-        throw Exception(message ?? '❌ $className');
-      } else {
-        final ggLog = invocation.namedArguments[const Symbol('ggLog')];
-        if (ggLog != null) {
-          ggLog(message ?? '✅ $className');
-        }
-      }
-      return Future.value(result);
+      return defaultReaction(
+        doThrow: doThrow,
+        invocation: invocation,
+        result: result,
+        message: message,
+      );
     });
   }
 
@@ -193,11 +187,6 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
     GgLog? ggLog,
     String? message,
   }) {
-    final className =
-        runtimeType.toString().replaceAll('Mock', '').split('<').first;
-
-    final exceptionMessage = message ?? className;
-
     when(
       () => get(
         ggLog: ggLog ?? any(named: 'ggLog'),
@@ -209,15 +198,33 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
         ),
       ),
     ).thenAnswer((invocation) async {
-      if (doThrow) {
-        throw Exception('❌ $exceptionMessage');
-      } else {
-        final ggLog = invocation.namedArguments[const Symbol('ggLog')];
-        if (ggLog != null && message != null) {
-          ggLog(message);
-        }
-      }
-      return Future.value(result);
+      return defaultReaction(
+        doThrow: doThrow,
+        invocation: invocation,
+        result: result,
+        message: message,
+      );
     });
+  }
+
+  // ...........................................................................
+  /// Default reaction for [exec] and [get]
+  Future<T> defaultReaction({
+    required bool doThrow,
+    required Invocation invocation,
+    required T result,
+    String? message,
+  }) {
+    message ??= runtimeType.toString().replaceAll('Mock', '').split('<').first;
+
+    if (doThrow) {
+      throw Exception('❌ $message');
+    } else {
+      final ggLog = invocation.namedArguments[const Symbol('ggLog')];
+      if (ggLog != null) {
+        ggLog('✅ $message');
+      }
+    }
+    return Future.value(result);
   }
 }

@@ -253,7 +253,7 @@ void main() {
             message: 'Log this',
           );
           expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
-          expect(messages, ['Log this']);
+          expect(messages, ['✅ Log this']);
         });
 
         test('when called without ggLog and directory', () async {
@@ -263,7 +263,7 @@ void main() {
             message: 'Log this',
           );
           expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
-          expect(messages, ['Log this']);
+          expect(messages, ['✅ Log this']);
         });
       });
 
