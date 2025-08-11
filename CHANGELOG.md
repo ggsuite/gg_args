@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- Update to latest SDK
+
 ## [2.0.4] - 2024-04-13
 
 ### Removed
@@ -137,6 +143,7 @@
 
 - Initial version.
 
+[Unreleased]: https://github.com/inlavigo/gg_args/compare/2.0.4...HEAD
 [2.0.4]: https://github.com/inlavigo/gg_args/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/inlavigo/gg_args/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/inlavigo/gg_args/compare/2.0.1...2.0.2

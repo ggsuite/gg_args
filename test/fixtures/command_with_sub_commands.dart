@@ -11,10 +11,7 @@ import 'package:gg_log/gg_log.dart';
 
 // #############################################################################
 class SubCommand extends Command<dynamic> {
-  SubCommand({
-    required this.name,
-    required this.ggLog,
-  }) {
+  SubCommand({required this.name, required this.ggLog}) {
     _addArgs();
   }
 

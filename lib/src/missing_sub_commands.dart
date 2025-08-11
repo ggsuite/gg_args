@@ -21,19 +21,18 @@ Future<(List<String> commandList, String? errorMessage)> missingSubCommands({
   // Iterate all files in lib/src/commands
   // and check if they are added to the command runner
   // and if they are added to the help message
-  final subCommands = directory
-      .listSync(recursive: false)
-      .where(
-        (file) => file.path.endsWith('.dart'),
-      )
-      .map(
-        (e) => basename(e.path)
-            .replaceAll('.dart', '')
-            .replaceAll('_', '-')
-            .replaceAll('gg-', ''),
-      )
-      .toList()
-    ..addAll(additionalSubCommands);
+  final subCommands =
+      directory
+          .listSync(recursive: false)
+          .where((file) => file.path.endsWith('.dart'))
+          .map(
+            (e) => basename(e.path)
+                .replaceAll('.dart', '')
+                .replaceAll('_', '-')
+                .replaceAll('gg-', ''),
+          )
+          .toList()
+        ..addAll(additionalSubCommands);
 
   final runner = CommandRunner<void>('runner', '');
   runner.addCommand(command);
@@ -46,15 +45,13 @@ Future<(List<String> commandList, String? errorMessage)> missingSubCommands({
   );
 
   final commandList = subCommands
-      .where(
-        (subCommand) => !hasLog(messages, subCommand),
-      )
+      .where((subCommand) => !hasLog(messages, subCommand))
       .toList();
 
   final errorMessage = commandList.isNotEmpty
       ? 'The following sub commands needed to be added to '
-          'class ${command.name.pascalCase}:\n'
-          '- ${commandList.join(', ')}'
+            'class ${command.name.pascalCase}:\n'
+            '- ${commandList.join(', ')}'
       : null;
 
   return (commandList, errorMessage);

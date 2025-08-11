@@ -72,8 +72,9 @@ void main() {
         group('when sub commands are missing', () {
           test('including missing additional arguments', () async {
             // Create a dart file "another_sub_command.dart"
-            final subCommandDartFile =
-                File('${tmpDir.path}/another_sub_command.dart');
+            final subCommandDartFile = File(
+              '${tmpDir.path}/another_sub_command.dart',
+            );
             subCommandDartFile.writeAsStringSync('// content');
 
             // Estimate the list of missing sub commands
@@ -87,9 +88,10 @@ void main() {
             // because MyCommand does not have the sub command "sub-command"
             expect(commandList, ['another-sub-command', 'xyz']);
             expect(
-                errorMessage,
-                'The following sub commands needed to be added to '
-                'class MyCommand:\n- another-sub-command, xyz');
+              errorMessage,
+              'The following sub commands needed to be added to '
+              'class MyCommand:\n- another-sub-command, xyz',
+            );
           });
         });
       });

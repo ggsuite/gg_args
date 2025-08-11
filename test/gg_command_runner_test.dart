@@ -85,10 +85,7 @@ void main() {
             await capturePrint(
               ggLog: messages.add,
               code: () async {
-                await runWithoutSubCommands(
-                  args: [],
-                  ggLog: messages.add,
-                );
+                await runWithoutSubCommands(args: [], ggLog: messages.add);
               },
             );
 
@@ -148,12 +145,7 @@ void main() {
               },
             );
 
-            final expectedLogs = [
-              'Missing',
-              'argument',
-              'for',
-              red('param'),
-            ];
+            final expectedLogs = ['Missing', 'argument', 'for', red('--param')];
 
             for (final expectedLog in expectedLogs) {
               expect(hasLog(messages, expectedLog), true);
@@ -178,9 +170,7 @@ void main() {
               },
             );
 
-            final expectedLogs = [
-              'Running "ggCmd" with param: "5"',
-            ];
+            final expectedLogs = ['Running "ggCmd" with param: "5"'];
 
             for (final expectedLog in expectedLogs) {
               expect(hasLog(messages, expectedLog), true);
@@ -254,10 +244,7 @@ void main() {
             await capturePrint(
               ggLog: messages.add,
               code: () async {
-                await runWithoutSubCommands(
-                  args: [],
-                  ggLog: messages.add,
-                );
+                await runWithoutSubCommands(args: [], ggLog: messages.add);
               },
             );
 
@@ -321,7 +308,7 @@ void main() {
               'Missing',
               red('argument'),
               'for',
-              red('param'),
+              red('--param'),
             ];
 
             for (final expectedLog in expectedLogs) {
@@ -345,9 +332,7 @@ void main() {
               },
             );
 
-            final expectedLogs = [
-              'Running "ggCmd" with param: "5"',
-            ];
+            final expectedLogs = ['Running "ggCmd" with param: "5"'];
 
             for (final expectedLog in expectedLogs) {
               expect(hasLog(messages, expectedLog), true);

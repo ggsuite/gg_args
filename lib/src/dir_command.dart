@@ -48,10 +48,7 @@ abstract class DirCommand<T> extends Command<dynamic> {
   // ...........................................................................
   /// Must be implemented in subclasses
   /// See [DirCommandExample] how to override this method
-  Future<T> exec({
-    required Directory directory,
-    required GgLog ggLog,
-  }) async {
+  Future<T> exec({required Directory directory, required GgLog ggLog}) async {
     final result = await get(directory: directory, ggLog: ggLog);
     final resultString = result.toString();
     if (resultString.isNotEmpty && resultString != 'null') {
@@ -64,10 +61,7 @@ abstract class DirCommand<T> extends Command<dynamic> {
   // ...........................................................................
   /// Must be implemented in subclasses
   /// See [DirCommandExample] how to override this method
-  Future<T> get({
-    required Directory directory,
-    required GgLog ggLog,
-  });
+  Future<T> get({required Directory directory, required GgLog ggLog});
 
   // .........................................................................
   /// Returns true if the directory exists
@@ -107,19 +101,15 @@ abstract class DirCommand<T> extends Command<dynamic> {
 /// Example git command implementation
 class DirCommandExample extends DirCommand<bool> {
   /// Constructor
-  DirCommandExample({
-    required super.ggLog,
-  }) : super(
-          name: 'example',
-          description: 'This is an example directory command.',
-        );
+  DirCommandExample({required super.ggLog})
+    : super(
+        name: 'example',
+        description: 'This is an example directory command.',
+      );
 
   // ...........................................................................
   @override
-  Future<bool> get({
-    required Directory directory,
-    required GgLog ggLog,
-  }) async {
+  Future<bool> get({required Directory directory, required GgLog ggLog}) async {
     await check(directory: directory);
     return true;
   }
@@ -129,19 +119,15 @@ class DirCommandExample extends DirCommand<bool> {
 /// Example git command implementation
 class VoidDirCommandExample extends DirCommand<void> {
   /// Constructor
-  VoidDirCommandExample({
-    required super.ggLog,
-  }) : super(
-          name: 'void-example',
-          description: 'This is an void example directory command.',
-        );
+  VoidDirCommandExample({required super.ggLog})
+    : super(
+        name: 'void-example',
+        description: 'This is an void example directory command.',
+      );
 
   // ...........................................................................
   @override
-  Future<void> get({
-    required Directory directory,
-    required GgLog ggLog,
-  }) async {
+  Future<void> get({required Directory directory, required GgLog ggLog}) async {
     await check(directory: directory);
   }
 }

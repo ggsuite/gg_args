@@ -13,16 +13,11 @@ import 'package:gg_log/gg_log.dart';
 /// A command runner that automatically forwards to a single sub command.
 class GgCommandRunner {
   /// Constructor
-  GgCommandRunner({
-    required this.command,
-    required this.ggLog,
-  });
+  GgCommandRunner({required this.command, required this.ggLog});
 
   // ...........................................................................
   /// Run the command
-  Future<void> run({
-    required List<String> args,
-  }) async {
+  Future<void> run({required List<String> args}) async {
     // Create a command runner
     final CommandRunner<void> runner = CommandRunner<void>(
       '',
@@ -41,7 +36,6 @@ class GgCommandRunner {
       // Run the command
       await runner.run(args);
     }
-
     // Print errors in red
     catch (e) {
       var msg = e.toString().replaceAll('Exception: ', '');
@@ -55,8 +49,9 @@ class GgCommandRunner {
   // ...........................................................................
   String _colorizeMissingParam(String msg) {
     // Capture param as well text before and after
-    final regExp =
-        RegExp(r'(Invalid argument\(s\): Option )(\w+)( is mandatory.)');
+    final regExp = RegExp(
+      r'(Invalid argument\(s\): Option )(\w+)( is mandatory.)',
+    );
     final match = regExp.firstMatch(msg);
 
     // Does not match?
@@ -82,8 +77,10 @@ class GgCommandRunner {
     msg = msg.replaceAll('"', '');
 
     // Capture param as well text before and after
-    final regExp =
-        RegExp(r'(Missing )(argument)( for\s*)(\w+)(\.)', multiLine: true);
+    final regExp = RegExp(
+      r'(Missing )(argument)( for\s*)(--\w+)(\.)',
+      multiLine: true,
+    );
     final match = regExp.firstMatch(msg);
 
     // Does not match?

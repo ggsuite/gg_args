@@ -81,11 +81,7 @@ void main() {
             directory: Directory('./test/fixtures'),
             ggLog: messages.add,
           );
-          expect(
-            messages,
-            ['true'],
-            reason: messages.join('\n'),
-          );
+          expect(messages, ['true'], reason: messages.join('\n'));
         });
 
         test('when input directory is given via --input argument', () async {
@@ -114,11 +110,7 @@ void main() {
       initTestDir();
       initCommand();
       await runner.run(['example', '--input', './test']);
-      expect(
-        messages,
-        ['true'],
-        reason: messages.join('\n'),
-      );
+      expect(messages, ['true'], reason: messages.join('\n'));
       expect(
         dirCommand.absolute(dirCommand.dirFromArgs).path,
         endsWith('gg_args/test'),
@@ -151,11 +143,7 @@ void main() {
           group('result: true', () {
             test('- without message', () async {
               final mock = MockDirCommand<bool>();
-              mock.mockExec(
-                result: true,
-                directory: d,
-                ggLog: messages.add,
-              );
+              mock.mockExec(result: true, directory: d, ggLog: messages.add);
               await mock.exec(directory: d, ggLog: messages.add);
               expect(messages.first, contains('✅ DirCommand'));
             });
@@ -175,9 +163,7 @@ void main() {
 
           test('no params', () async {
             final mock = MockDirCommand<bool>();
-            mock.mockExec(
-              result: true,
-            );
+            mock.mockExec(result: true);
             await mock.exec(directory: d, ggLog: messages.add);
             expect(messages.first, contains('✅ DirCommand'));
           });
@@ -225,10 +211,7 @@ void main() {
 
           test('no params', () async {
             final mock = MockDirCommand<bool>();
-            mock.mockExec(
-              result: true,
-              doThrow: true,
-            );
+            mock.mockExec(result: true, doThrow: true);
 
             late String exception;
             try {
@@ -258,10 +241,7 @@ void main() {
 
         test('when called without ggLog and directory', () async {
           final dirCommand = MockDirCommand<int>();
-          dirCommand.mockGet(
-            result: 42,
-            message: 'Log this',
-          );
+          dirCommand.mockGet(result: 42, message: 'Log this');
           expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
           expect(messages, ['✅ Log this']);
         });
