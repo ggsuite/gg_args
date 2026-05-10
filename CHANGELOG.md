@@ -5,6 +5,7 @@
 ### Changed
 
 - Update to latest SDK
+- gg\_multi: changed references to git
 
 ## [2.0.4] - 2024-04-13
 
