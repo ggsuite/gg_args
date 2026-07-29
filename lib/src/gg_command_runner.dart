@@ -27,8 +27,11 @@ class GgCommandRunner {
     // If no subcommands are defined, add the main command
     runner.addCommand(command);
 
-    // Forward to the main command
-    if (!args.contains(command.name)) {
+    // Forward to the main command.
+    // Only the first non-flag argument may be the command name itself.
+    // Later arguments equal to the name are values, e.g. "do add gg".
+    final firstNonFlag = args.indexWhere((a) => !a.startsWith('-'));
+    if (firstNonFlag < 0 || args[firstNonFlag] != command.name) {
       args = [command.name, ...args];
     }
 

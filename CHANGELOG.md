@@ -1,10 +1,11 @@
 # Changelog
 
-## [Unreleased]
+## [2.0.5] - 2026-07-29
 
 ### Changed
 
 - Update to latest SDK
+- GgCommandRunner: forward to main command even if an argument equals its name
 
 ## [2.0.4] - 2024-04-13
 
@@ -143,7 +144,7 @@
 
 - Initial version.
 
-[Unreleased]: https://github.com/inlavigo/gg_args/compare/2.0.4...HEAD
+[2.0.5]: https://github.com/inlavigo/gg_args/compare/2.0.4...2.0.5
 [2.0.4]: https://github.com/inlavigo/gg_args/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/inlavigo/gg_args/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/inlavigo/gg_args/compare/2.0.1...2.0.2

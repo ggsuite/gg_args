@@ -43,12 +43,33 @@ class SubCommand extends Command<dynamic> {
 }
 
 // #############################################################################
+class SubCommandWithRestArgs extends Command<dynamic> {
+  SubCommandWithRestArgs({required this.name, required this.ggLog});
+
+  @override
+  final String name;
+
+  final GgLog ggLog;
+
+  @override
+  String get description => 'description of $name';
+
+  @override
+  Future<void> run() async {
+    final targets = argResults?.rest ?? [];
+
+    ggLog('Running "$name" with targets "${targets.join(', ')}"');
+  }
+}
+
+// #############################################################################
 /// The command line interface for GgAbc
 class CommandWithSubCommands extends Command<dynamic> {
   /// Constructor
   CommandWithSubCommands({required this.ggLog}) {
     addSubcommand(SubCommand(name: 'sub1', ggLog: ggLog));
     addSubcommand(SubCommand(name: 'sub2', ggLog: ggLog));
+    addSubcommand(SubCommandWithRestArgs(name: 'add', ggLog: ggLog));
   }
 
   /// The log function

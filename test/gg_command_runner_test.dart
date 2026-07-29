@@ -12,6 +12,7 @@ import 'package:gg_console_colors/gg_console_colors.dart';
 import 'package:test/test.dart';
 
 import '../bin/gg_with_no_subcommands.dart';
+import '../bin/gg_with_subcommands.dart';
 
 void main() {
   final messages = <String>[];
@@ -177,6 +178,96 @@ void main() {
             }
           });
         });
+      });
+    });
+  });
+
+  group('with args containing the command name as value', () {
+    // #########################################################################
+    group('with args = [add, ggCmd]', () {
+      test('should forward to the sub command', () async {
+        // Regression: an argument value equal to the command name must not
+        // prevent forwarding to the main command, e.g. "gg do add gg".
+        final messages = <String>[];
+        exitCode = 0;
+
+        await capturePrint(
+          ggLog: messages.add,
+          code: () async {
+            await runWithSubCommands(
+              args: ['add', 'ggCmd'],
+              ggLog: messages.add,
+            );
+          },
+        );
+
+        expect(
+          hasLog(messages, 'Cannot specify arguments before a command.'),
+          false,
+        );
+        expect(hasLog(messages, 'Running "add" with targets "ggCmd"'), true);
+        expect(exitCode, 0);
+      });
+    });
+
+    // #########################################################################
+    group('with args = [sub1, --param, ggCmd]', () {
+      test('should forward to the sub command', () async {
+        final messages = <String>[];
+        exitCode = 0;
+
+        await capturePrint(
+          ggLog: messages.add,
+          code: () async {
+            await runWithSubCommands(
+              args: ['sub1', '--param', 'ggCmd'],
+              ggLog: messages.add,
+            );
+          },
+        );
+
+        expect(hasLog(messages, 'Running "sub1" with param "ggCmd"'), true);
+        expect(exitCode, 0);
+      });
+    });
+
+    // #########################################################################
+    group('with args = [ggCmd, add, ggCmd]', () {
+      test('should not prepend the command name twice', () async {
+        final messages = <String>[];
+        exitCode = 0;
+
+        await capturePrint(
+          ggLog: messages.add,
+          code: () async {
+            await runWithSubCommands(
+              args: ['ggCmd', 'add', 'ggCmd'],
+              ggLog: messages.add,
+            );
+          },
+        );
+
+        expect(hasLog(messages, 'Running "add" with targets "ggCmd"'), true);
+        expect(exitCode, 0);
+      });
+    });
+
+    // #########################################################################
+    group('with args = [--help]', () {
+      test('should still forward to the main command', () async {
+        final messages = <String>[];
+
+        await capturePrint(
+          ggLog: messages.add,
+          code: () async {
+            await runWithSubCommands(args: ['--help'], ggLog: messages.add);
+          },
+        );
+
+        expect(
+          hasLog(messages, 'Usage:  ggCmd <subcommand> [arguments]'),
+          true,
+        );
       });
     });
   });
