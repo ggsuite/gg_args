@@ -5,6 +5,7 @@
 ### Changed
 
 - Update to latest SDK
+- GgCommandRunner: forward to main command even if an argument equals its name
 
 ## [2.0.4] - 2024-04-13
 
