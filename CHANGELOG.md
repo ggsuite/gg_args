@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [2.0.5] - 2026-07-29
 
 ### Changed
 
@@ -144,7 +144,7 @@
 
 - Initial version.
 
-[Unreleased]: https://github.com/inlavigo/gg_args/compare/2.0.4...HEAD
+[2.0.5]: https://github.com/inlavigo/gg_args/compare/2.0.4...2.0.5
 [2.0.4]: https://github.com/inlavigo/gg_args/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/inlavigo/gg_args/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/inlavigo/gg_args/compare/2.0.1...2.0.2
