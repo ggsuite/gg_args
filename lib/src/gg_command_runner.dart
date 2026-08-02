@@ -10,6 +10,8 @@ import 'package:args/command_runner.dart';
 import 'package:gg_console_colors/gg_console_colors.dart';
 import 'package:gg_log/gg_log.dart';
 
+import 'unknown_sub_command_runner.dart';
+
 /// A command runner that automatically forwards to a single sub command.
 class GgCommandRunner {
   /// Constructor
@@ -19,7 +21,7 @@ class GgCommandRunner {
   /// Run the command
   Future<void> run({required List<String> args}) async {
     // Create a command runner
-    final CommandRunner<void> runner = CommandRunner<void>(
+    final CommandRunner<void> runner = UnknownSubCommandRunner(
       '',
       command.description,
     );
