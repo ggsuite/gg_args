@@ -5,6 +5,7 @@
 ### Changed
 
 - Report unknown sub commands also if option -h is given
+- \#gg: changed references to git
 
 ## 2.0.5 - 2026-07-29
 
