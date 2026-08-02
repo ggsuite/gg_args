@@ -6,6 +6,7 @@
 
 - Report unknown sub commands also if option -h is given
 - \#gg: changed references to git
+- \#gg: changed references to pub.dev
 
 ## 2.0.5 - 2026-07-29
 
