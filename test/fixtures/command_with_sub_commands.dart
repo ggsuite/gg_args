@@ -1,5 +1,5 @@
 // @license
-// Copyright (c) 2019 - 2024 Dr. Gabriel Gatzsche. All Rights Reserved.
+// Copyright (c) ggsuite. All Rights Reserved.
 //
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
@@ -63,6 +63,23 @@ class SubCommandWithRestArgs extends Command<dynamic> {
 }
 
 // #############################################################################
+/// A command that itself has sub commands, e.g. "ggCmd branch leaf"
+class BranchCommand extends Command<dynamic> {
+  BranchCommand({required this.name, required this.ggLog}) {
+    addSubcommand(SubCommand(name: 'leaf', ggLog: ggLog));
+    addSubcommand(SubCommandWithRestArgs(name: 'rest', ggLog: ggLog));
+  }
+
+  @override
+  final String name;
+
+  final GgLog ggLog;
+
+  @override
+  String get description => 'description of $name';
+}
+
+// #############################################################################
 /// The command line interface for GgAbc
 class CommandWithSubCommands extends Command<dynamic> {
   /// Constructor
@@ -70,6 +87,7 @@ class CommandWithSubCommands extends Command<dynamic> {
     addSubcommand(SubCommand(name: 'sub1', ggLog: ggLog));
     addSubcommand(SubCommand(name: 'sub2', ggLog: ggLog));
     addSubcommand(SubCommandWithRestArgs(name: 'add', ggLog: ggLog));
+    addSubcommand(BranchCommand(name: 'branch', ggLog: ggLog));
   }
 
   /// The log function
