@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0 - 2026-08-03
+
+### Changed
+
+- Replace ✅ by ✓ and ❌ by ✗
+
 ## 2.1.0 - 2026-08-02
 
 ### Changed
