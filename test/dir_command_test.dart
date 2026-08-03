@@ -145,7 +145,7 @@ void main() {
               final mock = MockDirCommand<bool>();
               mock.mockExec(result: true, directory: d, ggLog: messages.add);
               await mock.exec(directory: d, ggLog: messages.add);
-              expect(messages.first, contains('✅ DirCommand'));
+              expect(messages.first, contains('✓ DirCommand'));
             });
 
             test('- with message', () async {
@@ -165,7 +165,7 @@ void main() {
             final mock = MockDirCommand<bool>();
             mock.mockExec(result: true);
             await mock.exec(directory: d, ggLog: messages.add);
-            expect(messages.first, contains('✅ DirCommand'));
+            expect(messages.first, contains('✓ DirCommand'));
           });
         });
       });
@@ -194,7 +194,7 @@ void main() {
               } catch (e) {
                 exception = e.toString();
               }
-              expect(exception, contains('❌ DirCommand'));
+              expect(exception, contains('✗ DirCommand'));
             });
 
             test('- with message', () async {
@@ -219,7 +219,7 @@ void main() {
             } catch (e) {
               exception = e.toString();
             }
-            expect(exception, contains('❌ DirCommand'));
+            expect(exception, contains('✗ DirCommand'));
           });
         });
       });
@@ -236,14 +236,14 @@ void main() {
             message: 'Log this',
           );
           expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
-          expect(messages, ['✅ Log this']);
+          expect(messages, ['✓ Log this']);
         });
 
         test('when called without ggLog and directory', () async {
           final dirCommand = MockDirCommand<int>();
           dirCommand.mockGet(result: 42, message: 'Log this');
           expect(await dirCommand.get(directory: d, ggLog: messages.add), 42);
-          expect(messages, ['✅ Log this']);
+          expect(messages, ['✓ Log this']);
         });
       });
 
@@ -264,7 +264,7 @@ void main() {
           exception = e.toString();
         }
 
-        expect(exception, contains('❌ Message'));
+        expect(exception, contains('✗ Message'));
       });
     });
   });

@@ -204,11 +204,11 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
     message ??= runtimeType.toString().replaceAll('Mock', '').split('<').first;
 
     if (doThrow) {
-      throw Exception('❌ $message');
+      throw Exception('✗ $message');
     } else {
       final ggLog = invocation.namedArguments[const Symbol('ggLog')];
       if (ggLog != null) {
-        ggLog('✅ $message');
+        ggLog('✓ $message');
       }
     }
     return Future.value(result);
