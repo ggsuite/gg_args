@@ -9,4 +9,4 @@
 // coverage:ignore-file
 
 /// The version of the `gg_args` package.
-const String ggArgsVersion = '2.2.0';
+const String ggArgsVersion = '3.0.0';
