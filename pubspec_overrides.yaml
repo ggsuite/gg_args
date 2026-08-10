@@ -10,3 +10,5 @@ dependency_overrides:
     path: ../gg_console_colors
   gg_log:
     path: ../gg_log
+  gg_process:
+    path: ../gg_process
