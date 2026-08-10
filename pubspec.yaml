@@ -1,6 +1,6 @@
 name: gg_args
 description: Additions and helpers to the args packages needed by various of our projects.
-version: 2.2.0
+version: 3.0.0
 repository: https://github.com/inlavigo/gg_args.git
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   args: ^2.7.0
   gg_capture_print: ^1.0.9
-  gg_console_colors: ^2.1.5
+  gg_console_colors: ^2.3.0
   gg_log: ^1.0.6
   gg_process: ^1.1.7
   matcher: ^0.12.20

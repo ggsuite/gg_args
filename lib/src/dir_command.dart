@@ -48,7 +48,11 @@ abstract class DirCommand<T> extends Command<dynamic> {
   // ...........................................................................
   /// Must be implemented in subclasses
   /// See [DirCommandExample] how to override this method
-  Future<T> exec({required Directory directory, required GgLog ggLog}) async {
+  Future<T> exec({
+    required Directory directory,
+    required GgLog ggLog,
+    Map<String, dynamic> options = const {},
+  }) async {
     final result = await get(directory: directory, ggLog: ggLog);
     final resultString = result.toString();
     if (resultString.isNotEmpty && resultString != 'null') {
@@ -153,6 +157,7 @@ class MockDirCommand<T> extends Mock implements DirCommand<T> {
           ),
         ),
         ggLog: ggLog ?? any(named: 'ggLog'),
+        options: any(named: 'options'),
       ),
     ).thenAnswer((invocation) async {
       return defaultReaction(
