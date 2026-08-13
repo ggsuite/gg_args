@@ -1,5 +1,5 @@
 // @license
-// Copyright (c) ggsuite. All Rights Reserved.
+// Copyright (c) ggsuite
 //
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
@@ -26,10 +26,11 @@ Future<(List<String> commandList, String? errorMessage)> missingSubCommands({
           .listSync(recursive: false)
           .where((file) => file.path.endsWith('.dart'))
           .map(
-            (e) => basename(e.path)
-                .replaceAll('.dart', '')
-                .replaceAll('_', '-')
-                .replaceAll('gg-', ''),
+            (e) =>
+                basename(e.path)
+                    .replaceAll('.dart', '')
+                    .replaceAll('_', '-')
+                    .replaceAll('gg-', ''),
           )
           .toList()
         ..addAll(additionalSubCommands);

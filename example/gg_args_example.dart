@@ -1,6 +1,7 @@
 #!/usr/bin/env dart
+
 // @license
-// Copyright (c) ggsuite. All Rights Reserved.
+// Copyright (c) ggsuite
 //
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.

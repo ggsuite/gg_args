@@ -1,12 +1,14 @@
 #!/usr/bin/env dart
+
 // @license
-// Copyright (c) ggsuite. All Rights Reserved.
+// Copyright (c) ggsuite
 //
 // Use of this source code is governed by terms that can be
 // found in the LICENSE file in the root of this package.
 
 import 'package:gg_args/gg_args.dart';
 import 'package:gg_log/gg_log.dart';
+
 import '../test/fixtures/command_with_no_sub_commands.dart';
 
 // .............................................................................
