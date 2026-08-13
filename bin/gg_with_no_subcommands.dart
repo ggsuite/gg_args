@@ -1,4 +1,5 @@
 #!/usr/bin/env dart
+
 // @license
 // Copyright (c) ggsuite
 //
@@ -7,6 +8,7 @@
 
 import 'package:gg_args/gg_args.dart';
 import 'package:gg_log/gg_log.dart';
+
 import '../test/fixtures/command_with_no_sub_commands.dart';
 
 // .............................................................................
