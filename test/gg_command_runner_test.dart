@@ -30,8 +30,8 @@ void main() {
       test('should print help', () async {
         // Execute bin/gg_cmd.dart and check if it prints help
         final result = await Process.run(
-          './bin/gg_with_no_subcommands.dart',
-          [],
+          Platform.resolvedExecutable,
+          ['run', 'bin/gg_with_no_subcommands.dart'],
           stdoutEncoding: utf8,
           stderrEncoding: utf8,
         );
@@ -53,8 +53,8 @@ void main() {
         test('should print help', () async {
           // Execute bin/gg_cmd.dart and check if it prints help
           final result = await Process.run(
-            './bin/gg_with_no_subcommands.dart',
-            ['--help'],
+            Platform.resolvedExecutable,
+            ['run', 'bin/gg_with_no_subcommands.dart', '--help'],
             stdoutEncoding: utf8,
             stderrEncoding: utf8,
           );
@@ -279,8 +279,8 @@ void main() {
       test('should print help', () async {
         // Execute bin/gg_cmd.dart and check if it prints help
         final result = await Process.run(
-          './bin/gg_with_no_subcommands.dart',
-          [],
+          Platform.resolvedExecutable,
+          ['run', 'bin/gg_with_no_subcommands.dart'],
           stdoutEncoding: utf8,
           stderrEncoding: utf8,
         );
@@ -302,8 +302,8 @@ void main() {
         test('should print help', () async {
           // Execute bin/gg_cmd.dart and check if it prints help
           final result = await Process.run(
-            './bin/gg_with_no_subcommands.dart',
-            ['--help'],
+            Platform.resolvedExecutable,
+            ['run', 'bin/gg_with_no_subcommands.dart', '--help'],
             stdoutEncoding: utf8,
             stderrEncoding: utf8,
           );
