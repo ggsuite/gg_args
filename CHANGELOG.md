@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Never use /tmp as test dir base on Windows - Dart and git resolve it to different paths
+
 ## 3.1.1 - 2026-08-31
 
 ### Changed
