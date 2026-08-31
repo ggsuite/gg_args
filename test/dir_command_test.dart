@@ -112,7 +112,7 @@ void main() {
       await runner.run(['example', '--input', './test']);
       expect(messages, ['true'], reason: messages.join('\n'));
       expect(
-        dirCommand.absolute(dirCommand.dirFromArgs).path,
+        dirCommand.absolute(dirCommand.dirFromArgs).path.replaceAll('\\', '/'),
         endsWith('gg_args/test'),
       );
     });
