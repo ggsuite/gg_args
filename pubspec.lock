@@ -236,11 +236,10 @@ packages:
   gg_process:
     dependency: "direct main"
     description:
-      name: gg_process
-      sha256: e94a32b4cbbba4e100f0eaec66083d67814ef79d6c0a3a84e11d7c5456350427
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
+      path: "../gg_process"
+      relative: true
+    source: path
+    version: "1.4.1"
   glob:
     dependency: transitive
     description:
