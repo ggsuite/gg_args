@@ -1,11 +1,12 @@
 # Changelog
 
-## Unreleased
+## 3.2.2 - 2026-11-23
 
 ### Changed
 
 - Upgrade the DNA
 - Upgrade the SDK, the dependencies and the DNA
+- Stay within major versions on dependency upgrades
 
 ## 3.2.1 - 2026-11-14
 
